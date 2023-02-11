@@ -1,0 +1,206 @@
+{
+    "locale": "en",
+    "equipment": [
+        "Barbell",
+        "Dumbells",
+        "Weight plates",
+        "Kettlebells",
+        "Adjustable bench",
+        "Squat rack",
+        "Power cage"
+    ],
+    "muscleGroups": [
+        {
+            "name": "abs",
+            "subMuscles": [
+                "adsfasdf",
+                "hora",
+                "In mollit laborum"
+            ]
+        },
+        {
+            "name": "biceps",
+            "subMuscles": [
+                "Deserunt aliqua",
+                "Minim occaecat sunt"
+            ]
+        },
+        {
+            "name": "triceps",
+            "subMuscles": [
+                "fasdfasdf"
+            ]
+        },
+        {
+            "name": "chest",
+            "subMuscles": [
+                "a id pariatur sit deserunt",
+                "Irure excepteur elit",
+                "Do occaecat ullamco c",
+                "Dasdfadsfo occaecat ullamco c",
+                "Do ocaaaefefj3i ullamco c",
+                "caecat ullamco c"
+            ]
+        },
+        {
+            "name": "forearm",
+            "subMuscles": [
+                "Elit irure",
+                "asdfa",
+                "adsfasdfa"
+            ]
+        },
+        {
+            "name": "back",
+            "subMuscles": [
+                "asdfae"
+            ]
+        },
+        {
+            "name": "delts",
+            "subMuscles": [
+                "adf22sdf"
+            ]
+        },
+        {
+            "name": "quads",
+            "subMuscles": [
+                "asdfeij3oi2"
+            ]
+        },
+        {
+            "name": "calves",
+            "subMuscles": [
+                "Af3uif2h3f"
+            ]
+        },
+        {
+            "name": "glutes",
+            "subMuscles": [
+                "Asdfa sefwee"
+            ]
+        }
+    ],
+    "exercises": {
+        "asdlkfjoi234": {
+            "name": "Dumbell curls",
+            "commonMistakes": [
+                "loOfficia ut cupidatat culpa pariatur labore ad.r",
+                "Nostrud ut est ut aliquip aliqua Lorem officia esse culpa anim ut esse mollit.",
+                "Sint labore tempor duis culpa."
+            ],
+            "steps": [
+                "Commodo do quis sint minim et qui.",
+                "Minim cupidatat esse labore non.",
+                "Quis mollit do fugiat laboris do quis dolore et irure nostrud et.",
+                "Sit dolor aliqua consequat est excepteur.",
+                "Ut est nostrud elit sint amet ad elit eiusmod id dolore qui fugiat commodo voluptate."
+            ],
+            "similarExercises": [
+                "alsdkjf ks",
+                "adf the laste"
+            ],
+            "muscleGroupName": "biceps",
+            "equipment": "Dumbells"
+        },
+        "vjxztprkblmhnsqowfiedcguay": {
+            "name": "Deadlifts",
+            "commonMistakes": [
+                "Rounding the lower back",
+                "Not keeping the bar close to the body"
+            ],
+            "steps": [
+                "Place a barbell on the ground in front of you.",
+                "Bend down and grab the bar with an overhand grip, hands slightly wider than shoulder-width apart.",
+                "Lift the bar off the ground by straightening your hips and knees.",
+                "Lower the bar back down to the ground and repeat."
+            ],
+            "similarExercises": [
+                "Barbell Rows",
+                "Barbell Shrugs"
+            ],
+            "muscleGroupName": "back",
+            "equipment": "Barbell"
+        },
+        "yvxzwpktnsqromjehbldgufcai": {
+            "name": "Tricep Dips",
+            "commonMistakes": [
+                "Not keeping your body close to the bench",
+                "Not fully extending the arms at the top of the rep"
+            ],
+            "steps": [
+                "Place your hands on a stable surface behind you, such as a bench or the edge of a couch.",
+                "Extend your legs out in front of you and balance on your hands.",
+                "Lower your body down towards the floor by bending your elbows.",
+                "Push yourself back up to the starting position and repeat."
+            ],
+            "similarExercises": [
+                "Tricep Pushdowns",
+                "Close Grip Bench Press"
+            ],
+            "muscleGroupName": "triceps",
+            "equipment": "Adjustable bench"
+        },
+        "wxzyvptrsqonmkjehdglubfiac": {
+            "name": "Chest Flys",
+            "commonMistakes": [
+                "Flaring the elbows out too wide",
+                "Not fully extending the arms at the top of the rep"
+            ],
+            "steps": [
+                "Lie down on a flat bench with a pair of dumbbells in your hands.",
+                "Extend your arms straight up over your chest, keeping a slight bend in your elbows.",
+                "Lower the weights out to your sides in a wide arc, keeping your arms straight.",
+                "Bring the weights back to the starting position and repeat."
+            ],
+            "similarExercises": [
+                "Dumbbell Bench Press",
+                "Push-Ups"
+            ],
+            "muscleGroupName": "chest",
+            "equipment": "Dumbells"
+        },
+        "asdaaaf": {
+            "name": "Barbell Squat",
+            "commonMistakes": [
+                "Not keeping a neutral spine",
+                "Not going low enough",
+                "Bouncing at the bottom"
+            ],
+            "steps": [
+                "Stand with feet hip-width apart",
+                "Grip the barbell with hands shoulder-width apart",
+                "Squat down by pushing hips back and bending knees",
+                "Return to starting position"
+            ],
+            "muscleGroupName": "triceps",
+            "similarExercises": [
+                "Dumbbell Squat",
+                "Goblet Squat",
+                "Lunges"
+            ],
+            "equipment": "Barbell"
+        },
+        "asdasdf": {
+            "name": "Bicep Curl",
+            "commonMistakes": [
+                "Not keeping your back straight",
+                "Swinging the weights",
+                "Using too heavy weights"
+            ],
+            "steps": [
+                "Stand with your feet shoulder-width apart",
+                "Grasp a pair of dumbbells with your palms facing forward",
+                "Keeping your elbows close to your sides, raise the weights towards your shoulders",
+                "Pause for a moment and then lower the weights back to the starting position"
+            ],
+            "muscleGroupName": "chest",
+            "similarExercises": [
+                "Hammer Curl",
+                "Concentration Curl",
+                "Preacher Curl"
+            ],
+            "equipment": "Power cage"
+        }
+    }
+}
