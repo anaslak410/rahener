@@ -44,13 +44,13 @@ class MuscleGroup {
   String toString() => 'MuscleGroup(name: $name, subMuscles: $subMuscles)';
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return o is MuscleGroup &&
-        o.name == name &&
-        listEquals(o.subMuscles, subMuscles);
+    return other is MuscleGroup &&
+        other.name == name &&
+        listEquals(other.subMuscles, subMuscles);
   }
 
   @override

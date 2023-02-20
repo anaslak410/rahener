@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/filter_cubit.dart';
@@ -28,7 +31,7 @@ class _ExerciseFilterDialogState extends State<ExerciseFilterDialog> {
             Container(
               height: Constants.margin7,
             ),
-            const Text("Muscle Group Filter"),
+            Text(AppLocalizations.of(context)!.muscleGroupFilter),
             Container(
               height: Constants.margin3,
             ),
@@ -51,7 +54,7 @@ class _ExerciseFilterDialogState extends State<ExerciseFilterDialog> {
             Container(
               height: Constants.margin7,
             ),
-            const Text("Equipment Filter"),
+            Text(AppLocalizations.of(context)!.muscleGroupFilter),
             Container(
               height: Constants.margin3,
             ),
@@ -78,7 +81,7 @@ class _ExerciseFilterDialogState extends State<ExerciseFilterDialog> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Close'),
+              child: Text(AppLocalizations.of(context)!.filterDialogClose),
             ),
           ]),
         );

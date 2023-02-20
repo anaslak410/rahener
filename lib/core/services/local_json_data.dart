@@ -12,7 +12,7 @@ class LocalJsonDataService {
   static Future<LocalJsonDataService> create() async {
     try {
       var rahenerJsonData = await jsonDecode(
-          await rootBundle.loadString('assets/data/rahener_data.json'));
+          await rootBundle.loadString('assets/data/data_en.json'));
 
       var jsonDataServiceInstance = LocalJsonDataService._create();
       jsonDataServiceInstance._rahenerJsonData = rahenerJsonData;

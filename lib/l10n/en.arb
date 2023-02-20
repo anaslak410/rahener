@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "searchFieldHint": "Search for Exercises",
+  "@searchFieldHint": {
+    "description": "hint for the exercise searchField"
+  },
+  "muscleGroupFilter": "Muscle Group Filter",
+  "@muscleGroupFilter": {
+    "description": "aaasdf"
+  },
+  "equipmentFilter": "Equipment Filter",
+  "@equipmentFilter": {
+    "description": "asdf"
+  },
+  "filterDialogClose": "Close",
+  "@filterDialogClose": {
+    "description": "aasdfsdf"
+  }
+}

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/exercise.dart';
 
 class ExerciseCard extends StatelessWidget {
   final String exerciseName;

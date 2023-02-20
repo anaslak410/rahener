@@ -4,6 +4,7 @@ import 'package:rahener/core/services/local_json_data.dart';
 import '../models/exercise.dart';
 
 class ExercisesRepository {
+  // ignore: unused_field
   final LocalJsonDataService _localJsonDataService;
 
   final List<Exercise> _exercises = [];

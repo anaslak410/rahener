@@ -1,0 +1,19 @@
+{
+  "@@locale": "fa",
+  "searchFieldHint": "گەڕان بەدوای ڕاهێنانەکان ",
+  "@searchFieldHint": {
+    "description": "hint for the exercise searchField"
+  },
+  "muscleGroupFilter": "فلتەری گروپی ماسولکە",
+  "@muscleGroupFilter": {
+    "description": "aaasdf"
+  },
+  "equipmentFilter": "فلتەری ئامێر",
+  "@equipmentFilter": {
+    "description": "asdf"
+  },
+  "filterDialogClose": "دایبخە",
+  "@filterDialogClose": {
+    "description": "aasdfsdf"
+  }
+}

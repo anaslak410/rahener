@@ -81,17 +81,17 @@ class Exercise {
   }
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return o is Exercise &&
-        o.id == id &&
-        o.name == name &&
-        o.muscleGroupName == muscleGroupName &&
-        listEquals(o.commonMistakes, commonMistakes) &&
-        listEquals(o.steps, steps) &&
-        listEquals(o.similarExercises, similarExercises);
+    return other is Exercise &&
+        other.id == id &&
+        other.name == name &&
+        other.muscleGroupName == muscleGroupName &&
+        listEquals(other.commonMistakes, commonMistakes) &&
+        listEquals(other.steps, steps) &&
+        listEquals(other.similarExercises, similarExercises);
   }
 
   @override

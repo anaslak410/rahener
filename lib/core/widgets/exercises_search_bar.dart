@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/ExerciseListState.dart';
 import 'package:rahener/core/blocs/filter_cubit.dart';
 import '../../utils/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExerciseSearchBar extends StatefulWidget {
   final Widget filterDialog;
@@ -25,7 +26,7 @@ class _ExerciseSearchBarState extends State<ExerciseSearchBar> {
                   controller: bloc.state.searchFieldController,
                   onChanged: (value) => bloc.onSearchFiledChanged(value),
                   decoration: InputDecoration(
-                      hintText: "Search for exercises...",
+                      hintText: AppLocalizations.of(context)!.searchFieldHint,
                       prefixIcon: const Icon(Constants.searchBarPrefixIcon),
                       suffixIcon: bloc.shouldShowCancelIcon()
                           ? IconButton(
