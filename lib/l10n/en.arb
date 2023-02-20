@@ -15,5 +15,17 @@
   "filterDialogClose": "Close",
   "@filterDialogClose": {
     "description": "aasdfsdf"
+  },
+  "tipsSegment": "Tips",
+  "@tipsSegment": {
+    "description": ""
+  },
+  "stepsSegment": "Steps",
+  "@stepsSegment": {
+    "description": ""
+  },
+  "similarExercisesSEgment": "Similar Exercises",
+  "@similarExercisesSEgment": {
+    "description": ""
   }
 }

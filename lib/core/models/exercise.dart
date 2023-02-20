@@ -6,7 +6,7 @@ class Exercise {
   final String name;
   final String muscleGroupName;
   final String equipment;
-  final List<String> commonMistakes;
+  final List<String> tips;
   final List<String> steps;
   final List<String> similarExercises;
 
@@ -15,7 +15,7 @@ class Exercise {
     required this.name,
     required this.equipment,
     required this.muscleGroupName,
-    required this.commonMistakes,
+    required this.tips,
     required this.steps,
     required this.similarExercises,
   });
@@ -25,7 +25,7 @@ class Exercise {
     String? name,
     String? equipment,
     String? muscleGroupName,
-    List<String>? commonMistakes,
+    List<String>? tips,
     List<String>? steps,
     List<String>? similarExercises,
   }) {
@@ -34,7 +34,7 @@ class Exercise {
       name: name ?? this.name,
       equipment: equipment ?? this.equipment,
       muscleGroupName: muscleGroupName ?? this.muscleGroupName,
-      commonMistakes: commonMistakes ?? this.commonMistakes,
+      tips: tips ?? this.tips,
       steps: steps ?? this.steps,
       similarExercises: similarExercises ?? this.similarExercises,
     );
@@ -46,7 +46,7 @@ class Exercise {
       'name': name,
       'equipment': equipment,
       'muscleGroupName': muscleGroupName,
-      'commonMistakes': commonMistakes,
+      'tips': tips,
       'steps': steps,
       'similarExercises': similarExercises,
     };
@@ -58,7 +58,7 @@ class Exercise {
       name: map['name'],
       equipment: map['equipment'],
       muscleGroupName: map['muscleGroupName'],
-      commonMistakes: List<String>.from(map['commonMistakes']),
+      tips: List<String>.from(map['tips']),
       steps: List<String>.from(map['steps']),
       similarExercises: List<String>.from(map['similarExercises']),
     );
@@ -75,7 +75,7 @@ class Exercise {
      name: $name,
      equipment: $equipment,
       muscleGroupName: $muscleGroupName,
-       commonMistakes: $commonMistakes,
+       tips: $tips,
         steps: $steps,
          similarExercises: $similarExercises)''';
   }
@@ -89,7 +89,7 @@ class Exercise {
         other.id == id &&
         other.name == name &&
         other.muscleGroupName == muscleGroupName &&
-        listEquals(other.commonMistakes, commonMistakes) &&
+        listEquals(other.tips, tips) &&
         listEquals(other.steps, steps) &&
         listEquals(other.similarExercises, similarExercises);
   }
@@ -99,7 +99,7 @@ class Exercise {
     return id.hashCode ^
         name.hashCode ^
         muscleGroupName.hashCode ^
-        commonMistakes.hashCode ^
+        tips.hashCode ^
         steps.hashCode ^
         similarExercises.hashCode;
   }

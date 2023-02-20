@@ -15,5 +15,17 @@
   "filterDialogClose": "دایبخە",
   "@filterDialogClose": {
     "description": "aasdfsdf"
+  },
+  "tipsSegment": "ئامۆژگارییەکان",
+  "@tipsSegment": {
+    "description": ""
+  },
+  "stepsSegment": "هەنگاوەکان",
+  "@stepsSegment": {
+    "description": ""
+  },
+  "similarExercisesSEgment": "ڕاهێنانی هاوشێوە",
+  "@similarExercisesSEgment": {
+    "description": ""
   }
 }

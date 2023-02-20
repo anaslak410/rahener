@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:rahener/core/models/muscle_group.dart';
 import 'package:rahener/core/services/local_json_data.dart';
 
@@ -17,6 +18,11 @@ class ExercisesRepository {
 
   List<Exercise> get exercises {
     return _exercises;
+  }
+
+  AssetImage getExerciseImage(String exerciseId) {
+    var image = _localJsonDataService.getExerciseImage(exerciseId);
+    return image;
   }
 
   List<MuscleGroup> get muscleGroups {

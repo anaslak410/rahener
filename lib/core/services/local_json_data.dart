@@ -30,6 +30,10 @@ class LocalJsonDataService {
     }
   }
 
+  AssetImage getExerciseImage(String exerciseId) {
+    return AssetImage("assets/data/images/$exerciseId.gif");
+  }
+
   Future<Map<dynamic, dynamic>> getExercises() async {
     await Future.delayed(const Duration(seconds: 1));
     return _rahenerJsonData['exercises'];

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/screens/exercise_details.dart';
+import 'package:rahener/core/screens/exercise_filter_dialog.dart';
+import '../models/exercise.dart';
 import 'ExerciseListState.dart';
 
 class ExerciseListCubit extends Cubit<ExerciseListState> {
@@ -43,19 +45,9 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
     selected = !selected;
   }
 
-  @override
-  void onError(Object error, StackTrace stackTrace) {
-    log('$error, $stackTrace');
-    super.onError(error, stackTrace);
-  }
-
   void onCancelQueryTapped() {
     state.clearSearchQuery();
     emit(state.copyWith());
-  }
-
-  bool shouldShowCancelIcon() {
-    return state.searchFieldController.text != "";
   }
 
   void onChipDeleteTapped(String chipName) {
@@ -66,12 +58,54 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
     }
   }
 
-  onExerciseTapped(BuildContext context) {
+  void onExerciseTapped(BuildContext context, Exercise exercise) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ExerciseDetailsScreen()),
+      MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+              value: this,
+              child: ExerciseDetailsScreen(
+                exercise: exercise,
+                exerciseImage: _getExerciseImage(exercise.id),
+                similarExercises: _getSimilarExercises(exercise),
+              ))),
+    );
+  }
+
+  List<Exercise> _getSimilarExercises(Exercise exercise) {
+    List<Exercise> similarExercises = state.allExercises
+        .where((element) => element.muscleGroupName == exercise.muscleGroupName)
+        .toList();
+    similarExercises.removeWhere((element) => element.id == exercise.id);
+
+    return similarExercises;
+  }
+
+  void onFilterButtonTapped(BuildContext context) {
+    showDialog<String>(
+      context: context,
+      builder: (_) => Dialog.fullscreen(
+        child: BlocProvider.value(
+          value: this,
+          child: const ExerciseFilterDialog(),
+        ),
+      ),
     );
   }
 
   bool chipFiltersAreSelected() => state.selectedChipFilters.isNotEmpty;
+
+  bool shouldShowCancelIcon() {
+    return state.searchFieldController.text != "";
+  }
+
+  AssetImage _getExerciseImage(String id) {
+    return _exercisesRepository.getExerciseImage(id);
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    log('$error, $stackTrace');
+    super.onError(error, stackTrace);
+  }
 }

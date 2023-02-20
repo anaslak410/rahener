@@ -84,7 +84,7 @@
     "exercises": {
         "asdlkfjoi234": {
             "name": "Dumbell curls",
-            "commonMistakes": [
+            "tips": [
                 "loOfficia ut cupidatat culpa pariatur labore ad.r",
                 "Nostrud ut est ut aliquip aliqua Lorem officia esse culpa anim ut esse mollit.",
                 "Sint labore tempor duis culpa."
@@ -105,7 +105,7 @@
         },
         "vjxztprkblmhnsqowfiedcguay": {
             "name": "Deadlifts",
-            "commonMistakes": [
+            "tips": [
                 "Rounding the lower back",
                 "Not keeping the bar close to the body"
             ],
@@ -124,7 +124,7 @@
         },
         "yvxzwpktnsqromjehbldgufcai": {
             "name": "Tricep Dips",
-            "commonMistakes": [
+            "tips": [
                 "Not keeping your body close to the bench",
                 "Not fully extending the arms at the top of the rep"
             ],
@@ -143,7 +143,7 @@
         },
         "wxzyvptrsqonmkjehdglubfiac": {
             "name": "Chest Flys",
-            "commonMistakes": [
+            "tips": [
                 "Flaring the elbows out too wide",
                 "Not fully extending the arms at the top of the rep"
             ],
@@ -162,7 +162,7 @@
         },
         "asdaaaf": {
             "name": "Barbell Squat",
-            "commonMistakes": [
+            "tips": [
                 "Not keeping a neutral spine",
                 "Not going low enough",
                 "Bouncing at the bottom"
@@ -183,7 +183,7 @@
         },
         "asdasdf": {
             "name": "Bicep Curl",
-            "commonMistakes": [
+            "tips": [
                 "Not keeping your back straight",
                 "Swinging the weights",
                 "Using too heavy weights"

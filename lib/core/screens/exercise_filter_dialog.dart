@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
@@ -54,7 +53,7 @@ class _ExerciseFilterDialogState extends State<ExerciseFilterDialog> {
             Container(
               height: Constants.margin7,
             ),
-            Text(AppLocalizations.of(context)!.muscleGroupFilter),
+            Text(AppLocalizations.of(context)!.equipmentFilter),
             Container(
               height: Constants.margin3,
             ),

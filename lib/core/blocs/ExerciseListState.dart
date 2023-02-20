@@ -44,6 +44,10 @@ class ExerciseListState {
     return filteredExercises;
   }
 
+  List<Exercise> get allExercises {
+    return _exercises;
+  }
+
   List<String> get muscleGroupNames => selectedMuscleGroups.keys.toList();
   List<String> get equipmentNames => selectedEquipment.keys.toList();
 
