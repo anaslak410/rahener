@@ -34,12 +34,10 @@
         {
             "name": "chest",
             "subMuscles": [
-                "a id pariatur sit deserunt",
-                "Irure excepteur elit",
-                "Do occaecat ullamco c",
-                "Dasdfadsfo occaecat ullamco c",
-                "Do ocaaaefefj3i ullamco c",
-                "caecat ullamco c"
+                "Pectoralis major.",
+                "Pectoralis minor.",
+                "Serratus anterior.",
+                "Subclavius."
             ]
         },
         {
@@ -100,7 +98,12 @@
                 "alsdkjf ks",
                 "adf the laste"
             ],
-            "muscleGroupName": "biceps",
+            "primaryMuscles": [
+                "triceps"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
             "equipment": "Dumbells"
         },
         "vjxztprkblmhnsqowfiedcguay": {
@@ -119,7 +122,12 @@
                 "Barbell Rows",
                 "Barbell Shrugs"
             ],
-            "muscleGroupName": "back",
+            "primaryMuscles": [
+                "back"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
             "equipment": "Barbell"
         },
         "yvxzwpktnsqromjehbldgufcai": {
@@ -138,7 +146,12 @@
                 "Tricep Pushdowns",
                 "Close Grip Bench Press"
             ],
-            "muscleGroupName": "triceps",
+            "primaryMuscles": [
+                "delts"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
             "equipment": "Adjustable bench"
         },
         "wxzyvptrsqonmkjehdglubfiac": {
@@ -157,7 +170,12 @@
                 "Dumbbell Bench Press",
                 "Push-Ups"
             ],
-            "muscleGroupName": "chest",
+            "primaryMuscles": [
+                "chest"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
             "equipment": "Dumbells"
         },
         "asdaaaf": {
@@ -173,7 +191,12 @@
                 "Squat down by pushing hips back and bending knees",
                 "Return to starting position"
             ],
-            "muscleGroupName": "triceps",
+            "primaryMuscles": [
+                "biceps"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
             "similarExercises": [
                 "Dumbbell Squat",
                 "Goblet Squat",
@@ -194,13 +217,18 @@
                 "Keeping your elbows close to your sides, raise the weights towards your shoulders",
                 "Pause for a moment and then lower the weights back to the starting position"
             ],
-            "muscleGroupName": "chest",
+            "primaryMuscles": [
+                "biceps"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
             "similarExercises": [
                 "Hammer Curl",
                 "Concentration Curl",
                 "Preacher Curl"
             ],
-            "equipment": "Power cage"
+            "equipment": "Dumbells"
         }
     }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rahener/core/blocs/filter_cubit.dart';
+import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/widgets/exercise_card.dart';
 import 'package:rahener/utils/constants.dart';
 
@@ -18,11 +18,14 @@ class ExercisesListScreen extends StatefulWidget {
 
 class _ExercisesListScreenState extends State<ExercisesListScreen> {
   Widget _searchField(ExerciseListCubit bloc) {
-    return TextField(
-        controller: bloc.state.searchFieldController,
-        onChanged: (value) => bloc.onSearchFiledChanged(value),
-        decoration: InputDecoration(
+    return Expanded(
+      flex: 5,
+      child: TextField(
+          controller: bloc.state.searchFieldController,
+          onChanged: (value) => bloc.onSearchFiledChanged(value),
+          decoration: InputDecoration(
             hintText: AppLocalizations.of(context)!.searchFieldHint,
+            filled: true,
             prefixIcon: const Icon(Constants.searchBarPrefixIcon),
             suffixIcon: bloc.shouldShowCancelIcon()
                 ? IconButton(
@@ -30,16 +33,21 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
                     onPressed: bloc.onCancelQueryTapped,
                   )
                 : null,
-            constraints: const BoxConstraints(maxWidth: 300)));
+          )),
+    );
   }
 
-  IconButton _filterButton(ExerciseListCubit bloc, BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        bloc.onFilterButtonTapped(context);
-      },
-      color: ThemeData().primaryColor,
-      icon: const Icon(Constants.filterIcon),
+  Widget _filterButton(ExerciseListCubit bloc) {
+    return Expanded(
+      flex: 1,
+      child: IconButton(
+        onPressed: () {
+          bloc.onFilterButtonTapped(context);
+        },
+        color: ThemeData().primaryColor,
+        icon: const Icon(Constants.filterIcon),
+        iconSize: 30,
+      ),
     );
   }
 
@@ -53,7 +61,7 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
             SliverAppBar(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_searchField(bloc), _filterButton(bloc, context)],
+                children: [_searchField(bloc), _filterButton(bloc)],
               ),
               pinned: false,
               floating: true,
@@ -89,7 +97,7 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
                       onTap: () {
                         bloc.onExerciseTapped(context, exercise);
                       },
-                      muscleGroup: exercise.muscleGroupName,
+                      firstPrimaryMuscle: exercise.primaryMuscles.first,
                       equipmentName: exercise.equipment))
                   .toList()
             ])),

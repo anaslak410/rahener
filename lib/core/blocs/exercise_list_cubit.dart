@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rahener/core/models/muscle_group.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/screens/exercise_details.dart';
 import 'package:rahener/core/screens/exercise_filter_dialog.dart';
@@ -22,7 +23,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
           for (var equipment in _exercisesRepository.equipment) equipment: false
         },
         selectedMuscleGroups: {
-          for (var muscleGroup in _exercisesRepository.muscleGroupNames)
+          for (var muscleGroup in _exercisesRepository.muscleNames)
             muscleGroup: false
         }));
   }
@@ -32,7 +33,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   }
 
   void onMuscleFilterChipTapped(bool selected, String muscleGroupName) {
-    var newSelectedMuscleGroups = state.selectedMuscleGroups;
+    var newSelectedMuscleGroups = state.selectedPrimaryMuscles;
     newSelectedMuscleGroups[muscleGroupName] = selected;
     emit(state.copyWith(selectedMuscleGroups: newSelectedMuscleGroups));
     selected = !selected;
@@ -51,7 +52,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   }
 
   void onChipDeleteTapped(String chipName) {
-    if (state.muscleGroupNames.contains(chipName)) {
+    if (state.primaryMuscleGroupNames.contains(chipName)) {
       onMuscleFilterChipTapped(false, chipName);
     } else if (state.equipmentNames.contains(chipName)) {
       onEquipmentFilterChipTapped(false, chipName);
@@ -73,9 +74,16 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   }
 
   List<Exercise> _getSimilarExercises(Exercise exercise) {
-    List<Exercise> similarExercises = state.allExercises
-        .where((element) => element.muscleGroupName == exercise.muscleGroupName)
-        .toList();
+    List<Exercise> similarExercises = state.allExercises.where((element) {
+      for (var muscle in exercise.primaryMuscles) {
+        if (element.primaryMuscles.contains(muscle)) {
+          return true;
+        }
+      }
+      return false;
+    }).toList();
+
+    // remove current exercise
     similarExercises.removeWhere((element) => element.id == exercise.id);
 
     return similarExercises;

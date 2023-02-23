@@ -36,4 +36,5 @@ flutter:
   generate: true # Ad
   assets:
     - assets/data/data_en.json
+    - assets/data/data_kr.json
     - assets/data/images/

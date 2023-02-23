@@ -1,28 +1,34 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rahener/core/blocs/filter_cubit.dart';
+import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/screens/exercises_list.dart';
-import 'package:rahener/core/services/local_json_data.dart';
+import 'package:rahener/core/services/local_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Locale locale = const Locale('en');
   // Data services
-  LocalJsonDataService localJsonDataService =
-      await LocalJsonDataService.create();
+  LocalDataService localDataService =
+      await LocalDataService.create(locale.languageCode);
 
   // repositories
-  ExercisesRepository exercisesRepository = await ExercisesRepository.create(
-      localJsonDataService: localJsonDataService);
+  ExercisesRepository exercisesRepository =
+      await ExercisesRepository.create(localDataService: localDataService);
 
   runApp(MyApp(
+    locale: locale,
     exercisesRepository: exercisesRepository,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.exercisesRepository});
+  final Locale _locale;
+  const MyApp(
+      {super.key, required this.exercisesRepository, required Locale locale})
+      : _locale = locale;
   final ExercisesRepository exercisesRepository;
 
   @override
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Rahêner',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('en'),
+      locale: _locale,
       theme: ThemeData(
           useMaterial3: true, colorSchemeSeed: const Color(0xFF006877)),
       home: RepositoryProvider(

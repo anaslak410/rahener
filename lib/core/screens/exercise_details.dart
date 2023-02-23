@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rahener/core/models/muscle_group.dart';
+import 'package:rahener/core/widgets/equipment_label.dart';
 import 'package:rahener/core/widgets/exercise_steps_segment.dart';
 import 'package:rahener/core/widgets/exercise_tips_segment.dart';
+import 'package:rahener/core/widgets/muscle_label.dart';
 import 'package:rahener/core/widgets/similar_exercises_segment.dart';
 import 'package:rahener/utils/constants.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../blocs/filter_cubit.dart';
+import '../blocs/exercise_list_cubit.dart';
 import '../models/exercise.dart';
 
 class ExerciseDetailsScreen extends StatefulWidget {
@@ -60,20 +63,16 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
             Expanded(
               flex: 2,
               child: Stack(
-                  fit: StackFit.expand,
+                  fit: StackFit.loose,
                   alignment: Alignment.center,
                   children: [
                     Image(image: widget.exerciseImage),
-                    Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          widget.exercise.equipment,
-                          style: TextStyle(
-                            backgroundColor: Theme.of(context).primaryColor,
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            // decoration: TextDecoration(,
-                          ),
-                        ))
+                    MusclesLabel(
+                        primaryMuscles: widget.exercise.primaryMuscles,
+                        secondaryMuscles: widget.exercise.secondaryMuscles),
+                    EquipmentLabel(
+                      equipment: widget.exercise.equipment,
+                    ),
                   ]),
             ),
             Container(height: Constants.margin5),

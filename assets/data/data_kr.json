@@ -1,0 +1,205 @@
+{
+    "locale": "fa",
+    "equipment": [
+        "باربێل",
+        "دامبڵ",
+        "پلێتی کێش",
+        "کتێلبێڵز",
+        "کورسییەکی ڕێکخراو",
+        "ڕاکی سکوات",
+        "قەفەزی کارەبا"
+    ],
+    "muscleGroups": [
+        {
+            "name": "abs",
+            "subMuscles": [
+                "adsfasdf",
+                "hora",
+                "In mollit laborum"
+            ]
+        },
+        {
+            "name": "بایسێپس",
+            "subMuscles": [
+                "Deserunt aliqua",
+                "Minim occaecat sunt",
+                "fasdfe"
+            ]
+        },
+        {
+            "name": "triceps",
+            "subMuscles": [
+                "fasdfasdf"
+            ]
+        },
+        {
+            "name": "سنگ",
+            "subMuscles": [
+                "Pectoralis major.",
+                "Pectoralis minor.",
+                "Serratus anterior.",
+                "Subclavius."
+            ]
+        },
+        {
+            "name": "forearm",
+            "subMuscles": [
+                "Elit irure",
+                "asdfa",
+                "adsfasdfa"
+            ]
+        },
+        {
+            "name": "back",
+            "subMuscles": [
+                "asdfae"
+            ]
+        },
+        {
+            "name": "delts",
+            "subMuscles": [
+                "adf22sdf"
+            ]
+        },
+        {
+            "name": "quads",
+            "subMuscles": [
+                "asdfeij3oi2"
+            ]
+        },
+        {
+            "name": "calves",
+            "subMuscles": [
+                "Af3uif2h3f"
+            ]
+        },
+        {
+            "name": "glutes",
+            "subMuscles": [
+                "Asdfa sefwee"
+            ]
+        }
+    ],
+    "exercises": {
+        "asdlkfjoi234": {
+            "name": "Dumbell curls",
+            "tips": [
+                "loOfficia ut cupidatat culpa pariatur labore ad.r",
+                "Nostrud ut est ut aliquip aliqua Lorem officia esse culpa anim ut esse mollit.",
+                "Sint labore tempor duis culpa."
+            ],
+            "steps": [
+                "Commodo do quis sint minim et qui.",
+                "Minim cupidatat esse labore non.",
+                "Quis mollit do fugiat laboris do quis dolore et irure nostrud et.",
+                "Sit dolor aliqua consequat est excepteur.",
+                "Ut est nostrud elit sint amet ad elit eiusmod id dolore qui fugiat commodo voluptate."
+            ],
+            "similarExercises": [
+                "alsdkjf ks",
+                "adf the laste"
+            ],
+            "primaryMuscleGroup": "biceps",
+            "equipment": "Dumbells"
+        },
+        "vjxztprkblmhnsqowfiedcguay": {
+            "name": "Deadlifts",
+            "tips": [
+                "Rounding the lower back",
+                "Not keeping the bar close to the body"
+            ],
+            "steps": [
+                "Place a barbell on the ground in front of you.",
+                "Bend down and grab the bar with an overhand grip, hands slightly wider than shoulder-width apart.",
+                "Lift the bar off the ground by straightening your hips and knees.",
+                "Lower the bar back down to the ground and repeat."
+            ],
+            "similarExercises": [
+                "Barbell Rows",
+                "Barbell Shrugs"
+            ],
+            "primaryMuscleGroup": "back",
+            "equipment": "Barbell"
+        },
+        "yvxzwpktnsqromjehbldgufcai": {
+            "name": "Tricep Dips",
+            "tips": [
+                "Not keeping your body close to the bench",
+                "Not fully extending the arms at the top of the rep"
+            ],
+            "steps": [
+                "Place your hands on a stable surface behind you, such as a bench or the edge of a couch.",
+                "Extend your legs out in front of you and balance on your hands.",
+                "Lower your body down towards the floor by bending your elbows.",
+                "Push yourself back up to the starting position and repeat."
+            ],
+            "similarExercises": [
+                "Tricep Pushdowns",
+                "Close Grip Bench Press"
+            ],
+            "primaryMuscleGroup": "triceps",
+            "equipment": "Adjustable bench"
+        },
+        "wxzyvptrsqonmkjehdglubfiac": {
+            "name": "Chest Flys",
+            "tips": [
+                "فلارکردنی ئەژنۆکان زۆر بە فراوانی",
+                "درێژنەکردنەوەی قۆڵەکان بە تەواوی لە سەرەوەی"
+            ],
+            "steps": [
+                "لەسەر کورسییەکی تەخت پاڵ بکەوە و جووتێک دامبڵ بەدەستەوە بێت.",
+                "قۆڵەکانت ڕاست بەرەو سەرەوە درێژ بکەرەوە بەسەر سنگتدا, بە هێشتنەوەی کەمێک چەمانەوەی لە ئەژنۆکانتدا.",
+                "کێشەکان دابەزێنە دەرەوە بۆ لایەکانت بە کەوانەیەکی فراوان, قۆڵەکانت بە ڕاست ڕابگرە.",
+                "کێشەکان بگەڕێنەرەوە بۆ شوێنی دەستپێکردن و دووبارەی بکەرەوە."
+            ],
+            "similarExercises": [
+                "Dumbbell Bench Press",
+                "Push-Ups"
+            ],
+            "primaryMuscleGroup": "سنگ",
+            "equipment": "دامبڵ"
+        },
+        "asdaaaf": {
+            "name": "Barbell Squat",
+            "tips": [
+                "Not keeping a neutral spine",
+                "Not going low enough",
+                "Bouncing at the bottom"
+            ],
+            "steps": [
+                "Stand with feet hip-width apart",
+                "Grip the barbell with hands shoulder-width apart",
+                "Squat down by pushing hips back and bending knees",
+                "Return to starting position"
+            ],
+            "primaryMuscleGroup": "triceps",
+            "similarExercises": [
+                "Dumbbell Squat",
+                "Goblet Squat",
+                "Lunges"
+            ],
+            "equipment": "Barbell"
+        },
+        "asdasdf": {
+            "name": "Bicep Curl",
+            "tips": [
+                "نەهێشتنی پشتت بە ڕێکوپێکی",
+                "وەرچەرخانی قورساییەکان",
+                "بەکارهێنانی کێشی زۆر قورس"
+            ],
+            "steps": [
+                "وەستانە و پێیەکانت بە پانی شان لەیەکتر جیا ببنەوە",
+                "جووتێک دامبڵ بگرە و کفنەکانت ڕوویان لە پێشەوە بێت",
+                "هێشتنەوەی ئەژنۆکانت لە لاکانتەوە، قورساییەکان بەرەو شانەکانت بەرزبکەرەوە",
+                "بۆ ساتێک وەستان و پاشان کێشەکان دابەزێننەوە بۆ شوێنی دەستپێکردن"
+            ],
+            "primaryMuscleGroup": "بایسێپس",
+            "similarExercises": [
+                "Hammer Curl",
+                "Concentration Curl",
+                "Preacher Curl"
+            ],
+            "equipment": "دامبڵ"
+        }
+    }
+}

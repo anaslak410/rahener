@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rahener/core/models/muscle_group.dart';
-import 'package:rahener/core/services/local_json_data.dart';
+import 'package:rahener/core/services/local_data.dart';
 
 import '../models/exercise.dart';
 
 class ExercisesRepository {
   // ignore: unused_field
-  final LocalJsonDataService _localJsonDataService;
+  final LocalDataService _localJsonDataService;
 
   final List<Exercise> _exercises = [];
   List<MuscleGroup> _muscleGroups = [];
   List<String> _equipment = [];
 
-  ExercisesRepository._create(
-      {required LocalJsonDataService localJsonDataService})
+  ExercisesRepository._create({required LocalDataService localJsonDataService})
       : _localJsonDataService = localJsonDataService;
 
   List<Exercise> get exercises {
@@ -25,11 +24,7 @@ class ExercisesRepository {
     return image;
   }
 
-  List<MuscleGroup> get muscleGroups {
-    return _muscleGroups;
-  }
-
-  List<String> get muscleGroupNames {
+  List<String> get muscleNames {
     return _muscleGroups.map((e) => e.name).toList();
   }
 
@@ -38,16 +33,14 @@ class ExercisesRepository {
   }
 
   static Future<ExercisesRepository> create(
-      {required LocalJsonDataService localJsonDataService}) async {
+      {required LocalDataService localDataService}) async {
     var exercisesRepository =
-        ExercisesRepository._create(localJsonDataService: localJsonDataService);
-    Map<dynamic, dynamic> exercisesJson =
-        await localJsonDataService.getExercises();
+        ExercisesRepository._create(localJsonDataService: localDataService);
+    Map<dynamic, dynamic> exercisesJson = await localDataService.getExercises();
 
-    List<dynamic> muscleGroupsJson =
-        await localJsonDataService.getMuscleGroups();
+    List<dynamic> muscleGroupsJson = await localDataService.getMuscleGroups();
 
-    List<dynamic> equipmentJson = await localJsonDataService.getEquipment();
+    List<dynamic> equipmentJson = await localDataService.getEquipment();
 
     exercisesRepository._muscleGroups = muscleGroupsJson
         .map((muscleGroupJson) => MuscleGroup.fromMap(muscleGroupJson))

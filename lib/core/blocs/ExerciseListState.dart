@@ -10,13 +10,13 @@ class ExerciseListState {
 
   late TextEditingController searchFieldController;
 
-  final Map<String, bool> selectedMuscleGroups;
+  final Map<String, bool> selectedPrimaryMuscles;
   final Map<String, bool> selectedEquipment;
 
   ExerciseListState({
     List<Exercise> exercises = const [],
     TextEditingController? searchFieldController,
-    this.selectedMuscleGroups = const {},
+    this.selectedPrimaryMuscles = const {},
     this.selectedEquipment = const {},
     this.status = ExerciseListStatus.initial,
   }) : _exercises = exercises {
@@ -25,12 +25,12 @@ class ExerciseListState {
   }
 
   List<Exercise> get filteredExercises {
-    bool muscleGroupFilterIsOn = _muscleGroupFilterIsOn();
+    bool primaryMuscleFilterIsOn = _primaryMuscleFilterIsOn();
     bool equipmentFilterIsOn = _equipmentFilterIsOn();
 
     List<Exercise> filteredExercises = _exercises.where((exercise) {
-      if (muscleGroupFilterIsOn) {
-        if (!_muscleGroupFilterApplies(exercise.muscleGroupName)) {
+      if (primaryMuscleFilterIsOn) {
+        if (!_primaryMuscleFilterApplies(exercise.primaryMuscles)) {
           return false;
         }
       }
@@ -48,12 +48,13 @@ class ExerciseListState {
     return _exercises;
   }
 
-  List<String> get muscleGroupNames => selectedMuscleGroups.keys.toList();
+  List<String> get primaryMuscleGroupNames =>
+      selectedPrimaryMuscles.keys.toList();
   List<String> get equipmentNames => selectedEquipment.keys.toList();
 
   List<String> get selectedChipFilters {
     return [
-      ...selectedMuscleGroups.entries
+      ...selectedPrimaryMuscles.entries
           .where((element) => element.value == true)
           .map((e) => e.key)
           .toList(),
@@ -69,8 +70,8 @@ class ExerciseListState {
     return regex.hasMatch(exerciseName);
   }
 
-  bool _muscleGroupFilterIsOn() {
-    for (MapEntry element in selectedMuscleGroups.entries) {
+  bool _primaryMuscleFilterIsOn() {
+    for (MapEntry element in selectedPrimaryMuscles.entries) {
       if (element.value) return true;
     }
     return false;
@@ -87,9 +88,9 @@ class ExerciseListState {
     return false;
   }
 
-  bool muscleGroupIsSelected(String muscleGroupName) {
-    return selectedMuscleGroups.entries
-        .firstWhere((element) => element.key == muscleGroupName)
+  bool primaryMuscleIsSelected(String primaryMuscleGroup) {
+    return selectedPrimaryMuscles.entries
+        .firstWhere((element) => element.key == primaryMuscleGroup)
         .value;
   }
 
@@ -99,8 +100,13 @@ class ExerciseListState {
         .value;
   }
 
-  bool _muscleGroupFilterApplies(String muscleGroupName) {
-    return selectedMuscleGroups[muscleGroupName]!;
+  bool _primaryMuscleFilterApplies(List<String> primaryMuscles) {
+    for (var muscle in primaryMuscles) {
+      if (selectedPrimaryMuscles[muscle]!) {
+        return true;
+      }
+    }
+    return false;
   }
 
   bool _equipmentFilterApplies(String equipmentName) {
@@ -119,7 +125,8 @@ class ExerciseListState {
       exercises: exercises ?? _exercises,
       searchFieldController:
           searchFieldController ?? this.searchFieldController,
-      selectedMuscleGroups: selectedMuscleGroups ?? this.selectedMuscleGroups,
+      selectedPrimaryMuscles:
+          selectedMuscleGroups ?? this.selectedPrimaryMuscles,
       selectedEquipment: selectedEquipment ?? this.selectedEquipment,
       status: status ?? this.status,
     );
@@ -129,7 +136,7 @@ class ExerciseListState {
   String toString() {
     return '''ExerciseListState(exercises: $_exercises,
              query: query,
-             selected muscle groups: $selectedMuscleGroups,
+             selected muscle groups: $selectedPrimaryMuscles,
              selected equipment: $selectedEquipment,
              status: $status)''';
   }

@@ -4,7 +4,8 @@ import 'package:collection/collection.dart';
 class Exercise {
   final String id;
   final String name;
-  final String muscleGroupName;
+  final List<String> primaryMuscles;
+  final List<String> secondaryMuscles;
   final String equipment;
   final List<String> tips;
   final List<String> steps;
@@ -14,7 +15,8 @@ class Exercise {
     required this.id,
     required this.name,
     required this.equipment,
-    required this.muscleGroupName,
+    required this.primaryMuscles,
+    required this.secondaryMuscles,
     required this.tips,
     required this.steps,
     required this.similarExercises,
@@ -24,7 +26,8 @@ class Exercise {
     String? id,
     String? name,
     String? equipment,
-    String? muscleGroupName,
+    List<String>? primaryMuscles,
+    List<String>? secondaryMuscles,
     List<String>? tips,
     List<String>? steps,
     List<String>? similarExercises,
@@ -33,7 +36,8 @@ class Exercise {
       id: id ?? this.id,
       name: name ?? this.name,
       equipment: equipment ?? this.equipment,
-      muscleGroupName: muscleGroupName ?? this.muscleGroupName,
+      primaryMuscles: primaryMuscles ?? this.primaryMuscles,
+      secondaryMuscles: secondaryMuscles ?? this.secondaryMuscles,
       tips: tips ?? this.tips,
       steps: steps ?? this.steps,
       similarExercises: similarExercises ?? this.similarExercises,
@@ -45,7 +49,8 @@ class Exercise {
       'id': id,
       'name': name,
       'equipment': equipment,
-      'muscleGroupName': muscleGroupName,
+      'primaryMuscles': primaryMuscles,
+      'secondaryMuscles': secondaryMuscles,
       'tips': tips,
       'steps': steps,
       'similarExercises': similarExercises,
@@ -57,8 +62,9 @@ class Exercise {
       id: map['id'],
       name: map['name'],
       equipment: map['equipment'],
-      muscleGroupName: map['muscleGroupName'],
       tips: List<String>.from(map['tips']),
+      primaryMuscles: List<String>.from(map['primaryMuscles']),
+      secondaryMuscles: List<String>.from(map['secondaryMuscles']),
       steps: List<String>.from(map['steps']),
       similarExercises: List<String>.from(map['similarExercises']),
     );
@@ -74,7 +80,8 @@ class Exercise {
     return '''Exercise(id: $id,
      name: $name,
      equipment: $equipment,
-      muscleGroupName: $muscleGroupName,
+       primaryMuscles: $primaryMuscles,
+       secondaryMuscles: $secondaryMuscles,
        tips: $tips,
         steps: $steps,
          similarExercises: $similarExercises)''';
@@ -88,7 +95,8 @@ class Exercise {
     return other is Exercise &&
         other.id == id &&
         other.name == name &&
-        other.muscleGroupName == muscleGroupName &&
+        listEquals(other.primaryMuscles, primaryMuscles) &&
+        listEquals(other.secondaryMuscles, secondaryMuscles) &&
         listEquals(other.tips, tips) &&
         listEquals(other.steps, steps) &&
         listEquals(other.similarExercises, similarExercises);
@@ -98,7 +106,8 @@ class Exercise {
   int get hashCode {
     return id.hashCode ^
         name.hashCode ^
-        muscleGroupName.hashCode ^
+        primaryMuscles.hashCode ^
+        secondaryMuscles.hashCode ^
         tips.hashCode ^
         steps.hashCode ^
         similarExercises.hashCode;

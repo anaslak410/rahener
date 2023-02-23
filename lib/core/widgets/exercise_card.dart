@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class ExerciseCard extends StatelessWidget {
   final String exerciseName;
-  final String muscleGroup;
+  final String firstPrimaryMuscle;
   final String equipmentName;
   final Function() onTap;
 
   const ExerciseCard({
     super.key,
     required this.exerciseName,
-    required this.muscleGroup,
+    required this.firstPrimaryMuscle,
     required this.equipmentName,
     required this.onTap,
   });
@@ -19,7 +19,7 @@ class ExerciseCard extends StatelessWidget {
     return ListTile(
       horizontalTitleGap: 1,
       title: Text(exerciseName),
-      subtitle: Text("$muscleGroup | $equipmentName"),
+      subtitle: Text("$firstPrimaryMuscle | $equipmentName"),
       trailing: const Icon(Icons.arrow_right),
       onTap: onTap,
     );

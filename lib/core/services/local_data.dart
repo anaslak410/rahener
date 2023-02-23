@@ -4,17 +4,26 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class LocalJsonDataService {
+class LocalDataService {
   Map<dynamic, dynamic> _rahenerJsonData = {};
 
-  LocalJsonDataService._create();
+  LocalDataService._create();
 
-  static Future<LocalJsonDataService> create() async {
+  static Future<LocalDataService> create(String locale) async {
     try {
-      var rahenerJsonData = await jsonDecode(
-          await rootBundle.loadString('assets/data/data_en.json'));
+      String filePath;
+      if (locale == 'fa') {
+        filePath = 'assets/data/data_kr.json';
+      } else if (locale == "en") {
+        filePath = 'assets/data/data_en.json';
+      } else {
+        throw Exception("Locale has no data file");
+      }
 
-      var jsonDataServiceInstance = LocalJsonDataService._create();
+      var rahenerJsonData =
+          await jsonDecode(await rootBundle.loadString(filePath));
+
+      var jsonDataServiceInstance = LocalDataService._create();
       jsonDataServiceInstance._rahenerJsonData = rahenerJsonData;
 
       return jsonDataServiceInstance;

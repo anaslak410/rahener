@@ -2,7 +2,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rahener/core/blocs/filter_cubit.dart';
+import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/utils/constants.dart';
 
 import '../blocs/ExerciseListState.dart';
@@ -37,10 +37,11 @@ class _ExerciseFilterDialogState extends State<ExerciseFilterDialog> {
             Wrap(
               spacing: Constants.chipSpacing,
               runSpacing: Constants.chipRunSpacing,
-              children: List.generate(state.muscleGroupNames.length, (index) {
-                bool isSelected =
-                    state.muscleGroupIsSelected(state.muscleGroupNames[index]);
-                String name = state.muscleGroupNames[index];
+              children:
+                  List.generate(state.primaryMuscleGroupNames.length, (index) {
+                bool isSelected = state.primaryMuscleIsSelected(
+                    state.primaryMuscleGroupNames[index]);
+                String name = state.primaryMuscleGroupNames[index];
                 return FilterChip(
                     label: Text(name),
                     selected: isSelected,
