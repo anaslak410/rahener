@@ -116,7 +116,7 @@ class ExerciseListState {
   ExerciseListState copyWith({
     List<Exercise>? exercises,
     TextEditingController? searchFieldController,
-    Map<String, bool>? selectedMuscleGroups,
+    Map<String, bool>? selectedPrimaryMuscles,
     Map<String, bool>? selectedEquipment,
     List<String>? equipments,
     ExerciseListStatus? status,
@@ -126,7 +126,7 @@ class ExerciseListState {
       searchFieldController:
           searchFieldController ?? this.searchFieldController,
       selectedPrimaryMuscles:
-          selectedMuscleGroups ?? this.selectedPrimaryMuscles,
+          selectedPrimaryMuscles ?? this.selectedPrimaryMuscles,
       selectedEquipment: selectedEquipment ?? this.selectedEquipment,
       status: status ?? this.status,
     );

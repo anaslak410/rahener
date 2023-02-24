@@ -4,8 +4,8 @@
   "@searchFieldHint": {
     "description": "hint for the exercise searchField"
   },
-  "muscleGroupFilter": "Muscle Group Filter",
-  "@muscleGroupFilter": {
+  "muscleFilter": "Muscle Filter",
+  "@muscleFilter": {
     "description": "aaasdf"
   },
   "equipmentFilter": "Equipment Filter",
@@ -26,6 +26,10 @@
   },
   "similarExercisesSEgment": "Similar Exercises",
   "@similarExercisesSEgment": {
+    "description": ""
+  },
+  "emptySimilarExercises": "No similar exercises were found.",
+  "@emptySimilarExercises": {
     "description": ""
   }
 }

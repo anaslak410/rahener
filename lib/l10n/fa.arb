@@ -4,8 +4,8 @@
   "@searchFieldHint": {
     "description": "hint for the exercise searchField"
   },
-  "muscleGroupFilter": "فلتەری گروپی ماسولکە",
-  "@muscleGroupFilter": {
+  "muscleFilter": "فلتەری ماسولکە",
+  "@muscleFilter": {
     "description": "aaasdf"
   },
   "equipmentFilter": "فلتەری ئامێر",
@@ -26,6 +26,10 @@
   },
   "similarExercisesSEgment": "ڕاهێنانی هاوشێوە",
   "@similarExercisesSEgment": {
+    "description": ""
+  },
+  "emptySimilarExercises": "ڕاهێنانی هاوشێوە نەدۆزرایەوە.",
+  "@emptySimilarExercises": {
     "description": ""
   }
 }

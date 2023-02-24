@@ -22,7 +22,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
         selectedEquipment: {
           for (var equipment in _exercisesRepository.equipment) equipment: false
         },
-        selectedMuscleGroups: {
+        selectedPrimaryMuscles: {
           for (var muscleGroup in _exercisesRepository.muscleNames)
             muscleGroup: false
         }));
@@ -35,7 +35,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   void onMuscleFilterChipTapped(bool selected, String muscleGroupName) {
     var newSelectedMuscleGroups = state.selectedPrimaryMuscles;
     newSelectedMuscleGroups[muscleGroupName] = selected;
-    emit(state.copyWith(selectedMuscleGroups: newSelectedMuscleGroups));
+    emit(state.copyWith(selectedPrimaryMuscles: newSelectedMuscleGroups));
     selected = !selected;
   }
 

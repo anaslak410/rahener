@@ -30,7 +30,7 @@ class _ExerciseFilterDialogState extends State<ExerciseFilterDialog> {
             Container(
               height: Constants.margin7,
             ),
-            Text(AppLocalizations.of(context)!.muscleGroupFilter),
+            Text(AppLocalizations.of(context)!.muscleFilter),
             Container(
               height: Constants.margin3,
             ),
