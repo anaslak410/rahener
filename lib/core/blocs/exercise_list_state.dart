@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-
 import '../models/exercise.dart';
 
 enum ExerciseListStatus { initial, loading, success, failure }

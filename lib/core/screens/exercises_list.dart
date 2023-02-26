@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/widgets/exercise_card.dart';
+import 'package:rahener/navbar.dart';
 import 'package:rahener/utils/constants.dart';
 
-import '../blocs/ExerciseListState.dart';
+import '../blocs/exercise_list_state.dart';
 import '../models/exercise.dart';
-import 'exercise_filter_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExercisesListScreen extends StatefulWidget {
@@ -54,7 +54,7 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
   @override
   Widget build(BuildContext context) {
     var bloc = BlocProvider.of<ExerciseListCubit>(context);
-    return Scaffold(body: BlocBuilder<ExerciseListCubit, ExerciseListState>(
+    return BlocBuilder<ExerciseListCubit, ExerciseListState>(
       builder: (context, state) {
         return CustomScrollView(
           slivers: <Widget>[
@@ -104,6 +104,6 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
           ],
         );
       },
-    ));
+    );
   }
 }

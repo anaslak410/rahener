@@ -2,9 +2,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
+import 'package:rahener/core/blocs/navigation_cubit.dart';
+import 'package:rahener/core/blocs/navigation_state.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/screens/exercises_list.dart';
 import 'package:rahener/core/services/local_data.dart';
+import 'package:rahener/navbar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,11 +45,21 @@ class MyApp extends StatelessWidget {
           useMaterial3: true, colorSchemeSeed: const Color(0xFF006877)),
       home: RepositoryProvider(
         create: (context) => exercisesRepository,
-        child: BlocProvider(
-          create: (context) => ExerciseListCubit(
-              exercisesRepository: context.read<ExercisesRepository>()),
-          child: const ExercisesListScreen(),
-        ),
+        child: MultiBlocProvider(
+            providers: [
+              BlocProvider<ExerciseListCubit>(
+                create: (context) => ExerciseListCubit(
+                    exercisesRepository: context.read<ExercisesRepository>()),
+              ),
+              // BlocProvider<NavigationCubit>(
+              //   create: (context) =>
+              //       NavigationCubit(startingNavItem: NavItems.exercises),
+              // ),
+            ],
+            child: Scaffold(
+              body: const ExercisesListScreen(),
+              bottomNavigationBar: NavBar(),
+            )),
       ),
     );
   }

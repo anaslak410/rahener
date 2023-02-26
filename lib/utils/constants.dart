@@ -41,4 +41,8 @@ class Constants {
   static const IconData emptyListIcon = Icons.cancel_outlined;
 
   static const double borderRadius = 10;
+
+  static IconData? profileIcon;
+
+  static IconData? exercisesListIcon;
 }

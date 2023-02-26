@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/utils/constants.dart';
 
-import '../blocs/ExerciseListState.dart';
+import '../blocs/exercise_list_state.dart';
 
 class ExerciseFilterDialog extends StatefulWidget {
   const ExerciseFilterDialog({

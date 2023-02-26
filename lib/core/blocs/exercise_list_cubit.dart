@@ -6,7 +6,7 @@ import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/screens/exercise_details.dart';
 import 'package:rahener/core/screens/exercise_filter_dialog.dart';
 import '../models/exercise.dart';
-import 'ExerciseListState.dart';
+import 'exercise_list_state.dart';
 
 class ExerciseListCubit extends Cubit<ExerciseListState> {
   final ExercisesRepository _exercisesRepository;
