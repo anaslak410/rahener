@@ -1,7 +1,17 @@
-enum NavItems { profile, exercises }
-
 class NavigationState {
-  NavItems _currentNavItem;
+  final int currentIndex;
+  const NavigationState({
+    required this.currentIndex,
+  });
 
-  NavigationState({currentNavItem}) : _currentNavItem = currentNavItem;
+  NavigationState copyWith({
+    int? currentIndex,
+  }) {
+    return NavigationState(
+      currentIndex: currentIndex ?? this.currentIndex,
+    );
+  }
+
+  @override
+  String toString() => 'NavigationState(currentIndex: $currentIndex)';
 }

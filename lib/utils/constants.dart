@@ -39,10 +39,8 @@ class Constants {
   static const IconData exerciseTipsIcon = Icons.tips_and_updates;
   static const IconData similarExercisesIcon = Icons.two_k;
   static const IconData emptyListIcon = Icons.cancel_outlined;
+  static const IconData profileIcon = Icons.person_2;
+  static const IconData exercisesListIcon = Icons.list_alt;
 
   static const double borderRadius = 10;
-
-  static IconData? profileIcon;
-
-  static IconData? exercisesListIcon;
 }

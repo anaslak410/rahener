@@ -31,5 +31,13 @@
   "emptySimilarExercises": "No similar exercises were found.",
   "@emptySimilarExercises": {
     "description": ""
+  },
+  "exercisesNavItem": "Exercises",
+  "@exercisesNavItem": {
+    "description": ""
+  },
+  "profileNavItem": "Profile",
+  "@profileNavItem": {
+    "description": ""
   }
 }

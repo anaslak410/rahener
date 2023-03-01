@@ -31,5 +31,13 @@
   "emptySimilarExercises": "ڕاهێنانی هاوشێوە نەدۆزرایەوە.",
   "@emptySimilarExercises": {
     "description": ""
+  },
+  "exercisesNavItem": "ڕاهێنانەکان",
+  "@exercisesNavItem": {
+    "description": ""
+  },
+  "profileNavItem": "هەژمار",
+  "@profileNavItem": {
+    "description": ""
   }
 }

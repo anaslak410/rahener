@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rahener/core/models/muscle_group.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/screens/exercise_details.dart';
 import 'package:rahener/core/screens/exercise_filter_dialog.dart';
