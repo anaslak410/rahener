@@ -17,7 +17,7 @@ class ExerciseListState {
     TextEditingController? searchFieldController,
     this.selectedPrimaryMuscles = const {},
     this.selectedEquipment = const {},
-    this.status = ExerciseListStatus.initial,
+    this.status = ExerciseListStatus.success,
   }) : _exercises = exercises {
     this.searchFieldController =
         searchFieldController ?? TextEditingController();

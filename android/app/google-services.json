@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "560049125940",
+    "project_id": "rahener-7d9ce",
+    "storage_bucket": "rahener-7d9ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560049125940:android:2c237d93b3c32368d52861",
+        "android_client_info": {
+          "package_name": "com.example.rahener"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ2xYjm-ptz7l3bBV4eWoUdrFxwp8wJI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,7 +16,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   auto_route: ^5.0.4
   flutter_bloc: ^8.1.1
-  get: ^4.6.6
+  firebase_core: ^2.16.0
+  firebase_auth: ^4.10.0
+  intl_phone_number_input: ^0.7.3+1
   # intl: ^0.18.0
   flutter_localizations:
     sdk: flutter

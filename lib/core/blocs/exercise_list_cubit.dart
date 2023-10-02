@@ -89,6 +89,16 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   }
 
   void onCreateExerciseButtonTapped(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              BlocProvider.value(value: this, child: const CustomExercise())),
+    );
+  }
+
+  void onSaveExerciseButtonTapped(Exercise exercise) {
+    _exercisesRepository.addExercise(exercise);
     // _exercisesRepository.addExercise(Exercise(
     //     id: "jasdfu32fadsf",
     //     name: "custom shit",
@@ -98,16 +108,8 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
     //     tips: ["tips", "tipsaaaa"],
     //     steps: ["stepsa, steeeepppp"],
     //     similarExercises: [state.allExercises[1].id]));
-    // emit(state.copyWith(exercises: _exercisesRepository.exercises));
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              BlocProvider.value(value: this, child: const CustomExercise())),
-    );
+    emit(state.copyWith(exercises: _exercisesRepository.exercises));
   }
-
-  void onSaveExerciseButtonTapped() {}
 
   void onFilterButtonTapped(BuildContext context) {
     showDialog<String>(

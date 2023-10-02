@@ -1,19 +1,35 @@
+import 'dart:developer';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
+import 'package:rahener/core/services/auth_service.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
+import 'package:rahener/core/services/firebase.dart';
 import 'package:rahener/core/services/local_data.dart';
 import 'package:rahener/main_layout.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   Locale locale = const Locale('en');
+
   // Data services
   LocalDataService localDataService =
       await LocalDataService.create(locale.languageCode);
+  AuthService authService = AuthService(FirebaseAuth.instance);
+
+  // FirebaseService firebaseService =
+  // await FirebaseService.create(locale.languageCode);
 
   // repositories
   ExercisesRepository exercisesRepository =

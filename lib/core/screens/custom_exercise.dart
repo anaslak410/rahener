@@ -238,7 +238,7 @@ class _CustomExerciseState extends State<CustomExercise> {
     return FloatingActionButton.extended(
         label: Text("Save"),
         icon: Icon(Icons.save), // Save icon
-        onPressed: () => _onSaveButtonTapped(bloc);
+        onPressed: () => _onSaveButtonTapped(bloc));
   }
 
   void _onSaveButtonTapped(bloc) {
@@ -262,7 +262,7 @@ class _CustomExerciseState extends State<CustomExercise> {
           steps: exerciseSteps,
           similarExercises: []);
 
-      // blocon
+      bloc.onSaveExerciseButtonTapped(newExercise);
     }
   }
 
