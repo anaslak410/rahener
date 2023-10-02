@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
               create: (context) => NavigationCubit(startingIndex: 0),
             ),
           ],
-          child: MainLayout(),
+          child: const MainLayout(),
         ),
       ),
     );

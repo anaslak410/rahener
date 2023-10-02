@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
+import 'package:rahener/core/screens/custom_exercise.dart';
 import 'package:rahener/core/screens/exercise_details.dart';
 import 'package:rahener/core/screens/exercise_filter_dialog.dart';
 import '../models/exercise.dart';
@@ -82,11 +83,31 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
       return false;
     }).toList();
 
-    // remove current exercise
     similarExercises.removeWhere((element) => element.id == exercise.id);
 
     return similarExercises;
   }
+
+  void onCreateExerciseButtonTapped(BuildContext context) {
+    // _exercisesRepository.addExercise(Exercise(
+    //     id: "jasdfu32fadsf",
+    //     name: "custom shit",
+    //     equipment: state.equipmentNames[0],
+    //     primaryMuscles: ["biceps"],
+    //     secondaryMuscles: [state.primaryMuscleGroupNames[1]],
+    //     tips: ["tips", "tipsaaaa"],
+    //     steps: ["stepsa, steeeepppp"],
+    //     similarExercises: [state.allExercises[1].id]));
+    // emit(state.copyWith(exercises: _exercisesRepository.exercises));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              BlocProvider.value(value: this, child: const CustomExercise())),
+    );
+  }
+
+  void onSaveExerciseButtonTapped() {}
 
   void onFilterButtonTapped(BuildContext context) {
     showDialog<String>(

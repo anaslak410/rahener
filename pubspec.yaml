@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   auto_route: ^5.0.4
   flutter_bloc: ^8.1.1
+  get: ^4.6.6
   # intl: ^0.18.0
   flutter_localizations:
     sdk: flutter

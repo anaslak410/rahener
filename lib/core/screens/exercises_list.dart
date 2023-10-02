@@ -53,56 +53,64 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
   @override
   Widget build(BuildContext context) {
     var bloc = BlocProvider.of<ExerciseListCubit>(context);
-    return BlocBuilder<ExerciseListCubit, ExerciseListState>(
-      builder: (context, state) {
-        return CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_searchField(bloc), _filterButton(bloc)],
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: (() {
+          bloc.onCreateExerciseButtonTapped(context);
+        }),
+      ),
+      body: BlocBuilder<ExerciseListCubit, ExerciseListState>(
+        builder: (context, state) {
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [_searchField(bloc), _filterButton(bloc)],
+                ),
+                pinned: false,
+                floating: true,
+                snap: false,
               ),
-              pinned: false,
-              floating: true,
-              snap: false,
-            ),
-            SliverList(
-                delegate: SliverChildListDelegate([
-              bloc.chipFiltersAreSelected()
-                  ? Container(
-                      padding: const EdgeInsets.only(
-                          left: Constants.sideMargin,
-                          right: Constants.sideMargin,
-                          bottom: Constants.margin4,
-                          top: Constants.margin4),
-                      child: Wrap(
-                        runSpacing: Constants.chipRunSpacing,
-                        spacing: Constants.chipSpacing,
-                        children: List.generate(
-                            state.selectedChipFilters.length, (index) {
-                          String name = state.selectedChipFilters[index];
-                          return InputChip(
-                            label: Text(name),
-                            onDeleted: () => bloc.onChipDeleteTapped(name),
-                            isEnabled: true,
-                          );
-                        }),
-                      ),
-                    )
-                  : Container(),
-              ...state.filteredExercises
-                  .map((Exercise exercise) => ExerciseCard(
-                      exerciseName: exercise.name,
-                      onTap: () {
-                        bloc.onExerciseTapped(context, exercise);
-                      },
-                      firstPrimaryMuscle: exercise.primaryMuscles.first,
-                      equipmentName: exercise.equipment))
-                  .toList()
-            ])),
-          ],
-        );
-      },
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                bloc.chipFiltersAreSelected()
+                    ? Container(
+                        padding: const EdgeInsets.only(
+                            left: Constants.sideMargin,
+                            right: Constants.sideMargin,
+                            bottom: Constants.margin4,
+                            top: Constants.margin4),
+                        child: Wrap(
+                          runSpacing: Constants.chipRunSpacing,
+                          spacing: Constants.chipSpacing,
+                          children: List.generate(
+                              state.selectedChipFilters.length, (index) {
+                            String name = state.selectedChipFilters[index];
+                            return InputChip(
+                              label: Text(name),
+                              onDeleted: () => bloc.onChipDeleteTapped(name),
+                              isEnabled: true,
+                            );
+                          }),
+                        ),
+                      )
+                    : Container(),
+                ...state.filteredExercises
+                    .map((Exercise exercise) => ExerciseCard(
+                        exerciseName: exercise.name,
+                        onTap: () {
+                          bloc.onExerciseTapped(context, exercise);
+                        },
+                        firstPrimaryMuscle: exercise.primaryMuscles.first,
+                        equipmentName: exercise.equipment))
+                    .toList()
+              ])),
+            ],
+          );
+        },
+      ),
     );
   }
 }

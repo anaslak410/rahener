@@ -15,6 +15,10 @@ class ExercisesRepository {
   ExercisesRepository._create({required LocalDataService localJsonDataService})
       : _localJsonDataService = localJsonDataService;
 
+  void addExercise(Exercise exercise) {
+    _exercises.add(exercise);
+  }
+
   List<Exercise> get exercises {
     return _exercises;
   }
