@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rahener/core/models/muscle_group.dart';
+import 'package:rahener/core/blocs/exercise_list_cubit.dart';
+import 'package:rahener/core/models/exercise.dart';
 import 'package:rahener/core/widgets/equipment_label.dart';
 import 'package:rahener/core/widgets/exercise_steps_segment.dart';
 import 'package:rahener/core/widgets/exercise_tips_segment.dart';
@@ -9,8 +10,6 @@ import 'package:rahener/core/widgets/similar_exercises_segment.dart';
 import 'package:rahener/utils/constants.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../blocs/exercise_list_cubit.dart';
-import '../models/exercise.dart';
 
 class ExerciseDetailsScreen extends StatefulWidget {
   final Exercise exercise;

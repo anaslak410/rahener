@@ -43,4 +43,6 @@ class Constants {
   static const IconData exercisesListIcon = Icons.list_alt;
 
   static const double borderRadius = 10;
+  static const String testPhoneNUmber = "+17700000000";
+  static const String testVerificationCode = "111111";
 }

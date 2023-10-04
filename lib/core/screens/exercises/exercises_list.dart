@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
+import 'package:rahener/core/blocs/exercise_list_state.dart';
+import 'package:rahener/core/models/exercise.dart';
 import 'package:rahener/core/widgets/exercise_card.dart';
 import 'package:rahener/utils/constants.dart';
 
-import '../blocs/exercise_list_state.dart';
-import '../models/exercise.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExercisesListScreen extends StatefulWidget {

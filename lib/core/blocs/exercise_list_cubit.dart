@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
-import 'package:rahener/core/screens/custom_exercise.dart';
-import 'package:rahener/core/screens/exercise_details.dart';
-import 'package:rahener/core/screens/exercise_filter_dialog.dart';
+import 'package:rahener/core/screens/exercises/custom_exercise.dart';
+import 'package:rahener/core/screens/exercises/exercise_details.dart';
+import 'package:rahener/core/screens/exercises/exercise_filter_dialog.dart';
 import '../models/exercise.dart';
 import 'exercise_list_state.dart';
 
@@ -99,15 +99,6 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
 
   void onSaveExerciseButtonTapped(Exercise exercise) {
     _exercisesRepository.addExercise(exercise);
-    // _exercisesRepository.addExercise(Exercise(
-    //     id: "jasdfu32fadsf",
-    //     name: "custom shit",
-    //     equipment: state.equipmentNames[0],
-    //     primaryMuscles: ["biceps"],
-    //     secondaryMuscles: [state.primaryMuscleGroupNames[1]],
-    //     tips: ["tips", "tipsaaaa"],
-    //     steps: ["stepsa, steeeepppp"],
-    //     similarExercises: [state.allExercises[1].id]));
     emit(state.copyWith(exercises: _exercisesRepository.exercises));
   }
 

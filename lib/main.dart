@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
+import 'package:rahener/core/blocs/user_cubit.dart';
 import 'package:rahener/core/services/auth_service.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
-import 'package:rahener/core/services/firebase.dart';
+import 'package:rahener/core/services/auth_service.dart';
 import 'package:rahener/core/services/local_data.dart';
 import 'package:rahener/main_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,15 +39,21 @@ void main() async {
   runApp(MyApp(
     locale: locale,
     exercisesRepository: exercisesRepository,
+    authService: authService,
   ));
 }
 
 class MyApp extends StatelessWidget {
   final Locale _locale;
-  const MyApp(
-      {super.key, required this.exercisesRepository, required Locale locale})
-      : _locale = locale;
   final ExercisesRepository exercisesRepository;
+  final AuthService authService;
+
+  const MyApp(
+      {super.key,
+      required this.exercisesRepository,
+      required Locale locale,
+      required this.authService})
+      : _locale = locale;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +64,11 @@ class MyApp extends StatelessWidget {
       locale: _locale,
       theme: ThemeData(
           useMaterial3: true, colorSchemeSeed: const Color(0xFF006877)),
-      home: RepositoryProvider(
-        create: (context) => exercisesRepository,
+      home: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(create: (context) => exercisesRepository),
+          RepositoryProvider(create: (context) => authService),
+        ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider<ExerciseListCubit>(
@@ -67,6 +77,10 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<NavigationCubit>(
               create: (context) => NavigationCubit(startingIndex: 0),
+            ),
+            BlocProvider<UserCubit>(
+              create: (context) =>
+                  UserCubit(authService: context.read<AuthService>()),
             ),
           ],
           child: const MainLayout(),

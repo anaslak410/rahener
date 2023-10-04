@@ -3,9 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
+import 'package:rahener/core/blocs/exercise_list_state.dart';
 import 'package:rahener/utils/constants.dart';
-
-import '../blocs/exercise_list_state.dart';
 
 class ExerciseFilterDialog extends StatefulWidget {
   const ExerciseFilterDialog({
