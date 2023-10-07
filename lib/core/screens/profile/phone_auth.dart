@@ -24,7 +24,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
           InternationalPhoneNumberInput(onInputChanged: null),
           ElevatedButton(
               onPressed: () => widget._onSubmit,
-              child: Text("Send verification code"))
+              child: const Text("Send verification code"))
         ],
       ),
     );

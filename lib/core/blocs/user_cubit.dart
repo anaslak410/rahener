@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rahener/core/models/user_model.dart';
 import 'package:rahener/core/services/auth_service.dart';
-
 import 'user_state.dart';
+
+enum AuthError {
+  userExists,
+  wrongCode,
+  invalidPhoneNumber,
+  codeTimeout,
+}
 
 class UserCubit extends Cubit<UserState> {
   final AuthService _authService;
@@ -22,11 +29,24 @@ class UserCubit extends Cubit<UserState> {
 
   void signout() {
     _authService.signOut();
-    // emit(state.copyWith(status: UserStatus.notLogged));
+    emit(const UserState(status: UserStatus.notLogged));
   }
 
-  void abortAuthentication() {}
-  // abort authentication
+  void abortAuthentication() {
+    _authService.signOut();
+    emit(const UserState(status: UserStatus.notLogged));
+  }
 
-  // start authentication
+  Future<void> sendSms(String phoneNum) async {
+    log("sending sms");
+    try {
+      _authService.sendSms(phoneNum);
+    } catch (e) {}
+  }
+
+  Future<void> verifySms(String smsCode) async {
+    try {
+      _authService.verifyCode(smsCode, state.verificationNumber);
+    } catch (e) {}
+  }
 }
