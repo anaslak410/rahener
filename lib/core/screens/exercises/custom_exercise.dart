@@ -236,7 +236,7 @@ class _CustomExerciseState extends State<CustomExercise> {
 
   Widget _saveButton(bloc) {
     return FloatingActionButton.extended(
-        label: Text("Save"),
+        label: const Text("Save"),
         icon: Icon(Icons.save), // Save icon
         onPressed: () => _onSaveButtonTapped(bloc));
   }

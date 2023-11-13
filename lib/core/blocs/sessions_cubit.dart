@@ -11,6 +11,12 @@ class SessionsCubit extends Cubit<SessionsState> {
   void addSession(Session session) {
     emit(state.copyWith(sessions: [session, ...state.sessions]));
   }
+
+  void removeSession(Session session) {
+    List<Session> newSessions = List.from(state.sessions);
+    newSessions.remove(session);
+    emit(state.copyWith(sessions: newSessions));
+  }
 }
 
 class SessionsState {

@@ -31,12 +31,41 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
   late AnimationController _animationController;
   late Animation<Offset> _animation;
 
-  void _onDiscardButtonPressed() {
-    _showCancelWorkoutDialog();
+  void _onDiscardButtonPressed() async {
+    bool result = await _showCancelWorkoutDialog();
+    if (result) {
+      _bloc.discardSession();
+    }
   }
 
-  void _showCancelWorkoutDialog() {
-    showDialog(
+  SnackBar _buildSessionSavedSnackbar({
+    required String message,
+    required BuildContext context,
+  }) {
+    return SnackBar(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(message, style: const TextStyle(fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4), // Add some spacing
+        ],
+      ),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      duration: const Duration(seconds: 5),
+      behavior: SnackBarBehavior.floating,
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    );
+  }
+
+  Future<bool> _showCancelWorkoutDialog() async {
+    bool wantsToCancel = false;
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -47,8 +76,8 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
             FilledButton(
               child: Text('Cancel Session'),
               onPressed: () {
+                wantsToCancel = true;
                 Navigator.of(context).pop();
-                _bloc.discardSession();
               },
               style: TextButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.error,
@@ -67,6 +96,7 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
         );
       },
     );
+    return wantsToCancel;
   }
 
   void _onFinishExerciseButtonPressed() {
@@ -77,6 +107,9 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
       log("exercise finished");
       log(_bloc.state.exercisesPerfomed.toString());
       context.read<SessionsCubit>().addSession(_bloc.getSession(duration));
+      var snackbar = _buildSessionSavedSnackbar(
+          message: "Session Saved", context: context);
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
       _bloc.saveAndEndSession(duration);
     }
   }
@@ -180,7 +213,6 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
   @override
   void initState() {
     _bloc = BlocProvider.of<CurrentSessionCubit>(context);
-    // _timerCubit = BlocProvider.of<SessionTimerCubit>(context);
     super.initState();
 
     _animationController = AnimationController(
@@ -196,13 +228,14 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
       curve: Curves.easeInOut,
     ));
 
-    // _animationController.forward();
+    _animationController.forward();
   }
 
   @override
   void dispose() {
     log("session ended");
     _animationController.dispose();
+    _bloc.discardSession();
     super.dispose();
   }
 
