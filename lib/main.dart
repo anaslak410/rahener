@@ -5,15 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
+import 'package:rahener/core/blocs/current_session_cubit.dart';
+import 'package:rahener/core/blocs/session_timer_cubit.dart';
+import 'package:rahener/core/blocs/sessions_cubit.dart';
 import 'package:rahener/core/blocs/user_cubit.dart';
+import 'package:rahener/core/repositories/sessions_repository.dart';
 import 'package:rahener/core/services/auth_service.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
-import 'package:rahener/core/services/auth_service.dart';
+import 'package:rahener/core/services/firestore_data.dart';
 import 'package:rahener/core/services/local_data.dart';
 import 'package:rahener/main_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,12 +32,13 @@ void main() async {
   // Data services
   LocalDataService localDataService =
       await LocalDataService.create(locale.languageCode);
-  AuthService authService = AuthService(FirebaseAuth.instance);
-
-  // FirebaseService firebaseService =
-  // await FirebaseService.create(locale.languageCode);
+  FirestoreService firestoreService =
+      FirestoreService(instance: FirebaseFirestore.instance);
 
   // repositories
+  AuthService authService = AuthService(FirebaseAuth.instance);
+  SessionsRepository sessionsRepository =
+      await SessionsRepository.create(localDataService: localDataService);
   ExercisesRepository exercisesRepository =
       await ExercisesRepository.create(localDataService: localDataService);
 
@@ -40,19 +46,25 @@ void main() async {
     locale: locale,
     exercisesRepository: exercisesRepository,
     authService: authService,
+    firestoreService: firestoreService,
+    sessionsRepository: sessionsRepository,
   ));
 }
 
 class MyApp extends StatelessWidget {
   final Locale _locale;
   final ExercisesRepository exercisesRepository;
+  final SessionsRepository sessionsRepository;
   final AuthService authService;
+  final FirestoreService firestoreService;
 
   const MyApp(
       {super.key,
       required this.exercisesRepository,
+      required this.firestoreService,
       required Locale locale,
-      required this.authService})
+      required this.authService,
+      required this.sessionsRepository})
       : _locale = locale;
 
   @override
@@ -75,12 +87,23 @@ class MyApp extends StatelessWidget {
               create: (context) => ExerciseListCubit(
                   exercisesRepository: context.read<ExercisesRepository>()),
             ),
+            BlocProvider<CurrentSessionCubit>(
+              create: (context) =>
+                  CurrentSessionCubit(repository: exercisesRepository),
+            ),
+            BlocProvider<SessionTimerCubit>(
+              create: (context) => SessionTimerCubit(),
+            ),
+            BlocProvider<SessionsCubit>(
+              create: (context) => SessionsCubit(sessionsRepository),
+            ),
             BlocProvider<NavigationCubit>(
               create: (context) => NavigationCubit(startingIndex: 0),
             ),
             BlocProvider<UserCubit>(
-              create: (context) =>
-                  UserCubit(authService: context.read<AuthService>()),
+              create: (context) => UserCubit(
+                  authService: context.read<AuthService>(),
+                  firestoreService: firestoreService),
             ),
           ],
           child: const MainLayout(),

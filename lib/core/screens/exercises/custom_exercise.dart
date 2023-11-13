@@ -263,6 +263,7 @@ class _CustomExerciseState extends State<CustomExercise> {
           similarExercises: []);
 
       bloc.onSaveExerciseButtonTapped(newExercise);
+      Navigator.pop(context);
     }
   }
 

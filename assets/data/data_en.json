@@ -7,7 +7,10 @@
         "Kettlebells",
         "Adjustable bench",
         "Squat rack",
-        "Power cage"
+        "Power cage",
+        "Bodyweight",
+        "Pull-up bar",
+        "machine"
     ],
     "muscleGroups": [
         {
@@ -178,7 +181,7 @@
             ],
             "equipment": "Dumbells"
         },
-        "asdaaaf": {
+        "asdafasdfdsf": {
             "name": "Barbell Squat",
             "tips": [
                 "Not keeping a neutral spine",
@@ -229,6 +232,213 @@
                 "Preacher Curl"
             ],
             "equipment": "Dumbells"
+        },
+        "exercise41": {
+            "name": "Barbell Deadlifts",
+            "tips": [
+                "Maintain proper form",
+                "Engage your core"
+            ],
+            "steps": [
+                "Place a barbell on the ground in front of you.",
+                "Bend down and grab the bar with an overhand grip, hands slightly wider than shoulder-width apart.",
+                "Lift the bar off the ground by straightening your hips and knees.",
+                "Lower the bar back down to the ground and repeat."
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "back"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "equipment": "Barbell"
+        },
+        "exercise42": {
+            "name": "Dumbbell Bicep Curls",
+            "tips": [
+                "Keep your elbows close to your sides",
+                "Control the weight"
+            ],
+            "steps": [
+                "Stand with your feet shoulder-width apart",
+                "Grasp a pair of dumbbells with your palms facing forward",
+                "Keeping your elbows close to your sides, raise the weights towards your shoulders",
+                "Pause for a moment and then lower the weights back to the starting position"
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "biceps"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "equipment": "Dumbells"
+        },
+        "exercise43": {
+            "name": "Tricep Dips",
+            "tips": [
+                "Not keeping your body close to the bench",
+                "Not fully extending the arms at the top of the rep"
+            ],
+            "steps": [
+                "Place your hands on a stable surface behind you, such as a bench or the edge of a couch.",
+                "Extend your legs out in front of you and balance on your hands.",
+                "Lower your body down towards the floor by bending your elbows.",
+                "Push yourself back up to the starting position and repeat."
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "delts"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "equipment": "Adjustable bench"
+        },
+        "exercise44": {
+            "name": "Chest Flys",
+            "tips": [
+                "Flaring the elbows out too wide",
+                "Not fully extending the arms at the top of the rep"
+            ],
+            "steps": [
+                "Lie down on a flat bench with a pair of dumbbells in your hands.",
+                "Extend your arms straight up over your chest, keeping a slight bend in your elbows.",
+                "Lower the weights out to your sides in a wide arc, keeping your arms straight.",
+                "Bring the weights back to the starting position and repeat."
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "chest"
+            ],
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "equipment": "Dumbells"
+        },
+        "exercise45": {
+            "name": "Barbell Squat",
+            "tips": [
+                "Not keeping a neutral spine",
+                "Not going low enough",
+                "Bouncing at the bottom"
+            ],
+            "steps": [
+                "Stand with feet hip-width apart",
+                "Grip the barbell with hands shoulder-width apart",
+                "Squat down by pushing hips back and bending knees",
+                "Return to starting position"
+            ],
+            "primaryMuscles": [
+                "quads"
+            ],
+            "secondaryMuscles": [
+                "hamstrings"
+            ],
+            "similarExercises": [],
+            "equipment": "Barbell"
+        },
+        "exercise46": {
+            "name": "Kettlebell Swings",
+            "tips": [
+                "Maintain a flat back",
+                "Use your hips to propel the kettlebell"
+            ],
+            "steps": [
+                "Stand with your feet shoulder-width apart",
+                "Hold a kettlebell with both hands in front of you",
+                "Bend at the hips and knees, then swing the kettlebell up to shoulder height",
+                "Lower the kettlebell and repeat"
+            ],
+            "primaryMuscles": [
+                "back"
+            ],
+            "similarExercises": [],
+            "secondaryMuscles": [
+                "quads"
+            ],
+            "equipment": "Kettlebells"
+        },
+        "exercise47": {
+            "name": "Pull-Ups",
+            "tips": [
+                "Engage your lats",
+                "Use a controlled motion"
+            ],
+            "steps": [
+                "Hang from a pull-up bar with your palms facing away from you",
+                "Pull your body up towards the bar by squeezing your shoulder blades together",
+                "Lower your body back down to the starting position"
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "back"
+            ],
+            "secondaryMuscles": [
+                "biceps"
+            ],
+            "equipment": "Pull-up bar"
+        },
+        "exercise48": {
+            "name": "Leg Press",
+            "tips": [
+                "Use a full range of motion",
+                "Keep your feet shoulder-width apart"
+            ],
+            "steps": [
+                "Sit in the leg press machine with your feet on the platform shoulder-width apart",
+                "Push the platform upward by extending your knees",
+                "Lower the platform back down to the starting position"
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "quads"
+            ],
+            "secondaryMuscles": [
+                "glutes"
+            ],
+            "equipment": "machine"
+        },
+        "exercise49": {
+            "name": "Calf Raises",
+            "tips": [
+                "Fully extend your ankles",
+                "Squeeze your calf muscles at the top of the movement"
+            ],
+            "steps": [
+                "Stand on the edge of a step or platform with your heels hanging off",
+                "Raise your heels as high as possible by extending your ankles",
+                "Lower your heels back down below the level of the step and repeat"
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "calves"
+            ],
+            "secondaryMuscles": [
+                "quads"
+            ],
+            "equipment": "Bodyweight"
+        },
+        "exercise50": {
+            "name": "Glute Bridges",
+            "tips": [
+                "Squeeze your glutes at the top of the movement",
+                "Keep your core engaged"
+            ],
+            "steps": [
+                "Lie on your back with your knees bent and feet flat on the ground",
+                "Push through your heels to lift your hips off the ground, creating a straight line from your shoulders to your knees",
+                "Lower your hips back down and repeat"
+            ],
+            "similarExercises": [],
+            "primaryMuscles": [
+                "glutes"
+            ],
+            "secondaryMuscles": [
+                "hamstrings"
+            ],
+            "equipment": "Bodyweight"
         }
     }
 }

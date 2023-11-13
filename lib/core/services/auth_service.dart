@@ -1,11 +1,10 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rahener/core/models/user_model.dart';
+import 'package:rahener/utils/constants.dart';
 
 class AuthService {
   final FirebaseAuth _auth;
-  // String _verificationId = "";
 
   AuthService(this._auth);
 
@@ -15,47 +14,46 @@ class AuthService {
     });
   }
 
-  Future<String> sendSms(String phoneNum) async {
-    String verificationNum = "";
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNum,
-      verificationCompleted: (_) {},
-      codeAutoRetrievalTimeout: (_) {},
-      verificationFailed: (FirebaseAuthException e) {
-        throw e;
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        log("code sent");
-        verificationNum = verificationId;
-      },
-    );
-    return verificationNum;
-  }
-
-  /*
-  wrong veri,
-  wrong number,
-  timeout,
-  phone already exists, 
-  
-  
-   */
-  Future<void> verifyCode(String code, verificationId) async {
+  Future<void> sendSms(String phoneNum, Function onCodeSent) async {
     try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId, smsCode: code);
-      await _auth.signInWithCredential(credential);
-      log(_auth.currentUser.toString());
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNum,
+        verificationCompleted: (_) {},
+        codeAutoRetrievalTimeout: (_) {},
+        verificationFailed: (FirebaseAuthException e) {
+          throw e;
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          log("code sent");
+          // onCodeSent = verificationId;
+          onCodeSent(verificationId);
+        },
+      );
+      // if (verificationNum.isEmpty) {
+      //   throw Exception("verification num is empty");
+      // }
+      // return verificationNum;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> signOut() async {
-    _auth.signOut();
+  Future<void> verifyCode(String code, verificationId) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: code);
+      await _auth.signInWithCredential(credential);
+      // log(_auth.currentUser.toString());
+    } on Exception {
+      rethrow;
+    }
   }
 
-  // void logIn() {}
-  // void onVerifyCodeTapped() {}
-  void createUserAccount() {}
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

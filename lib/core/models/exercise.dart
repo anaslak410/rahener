@@ -1,6 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-// ignore: depend_on_referenced_packages
+
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:rahener/core/blocs/ExerciseSet.dart';
 
 class Exercise {
   final String id;
@@ -113,4 +117,64 @@ class Exercise {
         steps.hashCode ^
         similarExercises.hashCode;
   }
+}
+
+class SessionExercise extends Exercise {
+  final List<ExerciseSet> _sets;
+
+  SessionExercise(
+      {required id,
+      required name,
+      required equipment,
+      required primaryMuscles,
+      required secondaryMuscles,
+      required tips,
+      required steps,
+      List<ExerciseSet> sets = const [],
+      required similarExercises})
+      : _sets = sets,
+        super(
+            id: id,
+            name: name,
+            equipment: equipment,
+            primaryMuscles: primaryMuscles,
+            secondaryMuscles: secondaryMuscles,
+            tips: tips,
+            steps: steps,
+            similarExercises: similarExercises);
+
+  SessionExercise.fromExercise(Exercise exercise)
+      : _sets = [],
+        super(
+            id: exercise.id,
+            name: exercise.name,
+            equipment: exercise.equipment,
+            primaryMuscles: exercise.primaryMuscles,
+            secondaryMuscles: exercise.secondaryMuscles,
+            tips: exercise.tips,
+            steps: exercise.steps,
+            similarExercises: exercise.similarExercises);
+
+  void addSet({ExerciseSet? set}) {
+    if (set == null) {
+      _sets.add(ExerciseSet(reps: 0, weight: 0.00));
+    } else {
+      _sets.add(set);
+    }
+  }
+
+  void removeSet(int index) {
+    _sets.removeAt(index);
+  }
+
+  void updateSet(int index, ExerciseSet set) {
+    _sets[index] = set;
+  }
+
+  get sets {
+    return _sets;
+  }
+
+  @override
+  String toString() => 'SessionExercise(_sets: $_sets)';
 }

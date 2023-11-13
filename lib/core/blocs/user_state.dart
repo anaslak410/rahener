@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
+import 'package:rahener/core/models/auth_exception.dart';
 
 import 'package:rahener/core/models/exercise.dart';
 import 'package:rahener/core/models/user_model.dart';
@@ -10,21 +12,30 @@ enum UserStatus { initial, loading, notLogged, logged }
 
 class UserState {
   const UserState(
-      {required this.status, UserModel? user, this.verificationNumber})
-      : _user = user;
+      {required this.status,
+      UserModel? user,
+      String? verificationID,
+      AuthException? authException})
+      : _user = user,
+        verificationID = verificationID ?? "",
+        authException = authException ?? AuthException.none;
+
   final UserStatus status;
+  final AuthException authException;
   final UserModel? _user;
-  final String? verificationNumber;
+  final String verificationID;
 
   UserState copyWith({
     UserStatus? status,
     UserModel? user,
-    String? verificationNumber,
+    AuthException? authException,
+    String? verificationID,
   }) {
     return UserState(
-      status: status ?? this.status,
       user: user ?? _user,
-      verificationNumber: verificationNumber ?? this.verificationNumber,
+      status: status ?? this.status,
+      authException: authException ?? this.authException,
+      verificationID: verificationID ?? this.verificationID,
     );
   }
 }

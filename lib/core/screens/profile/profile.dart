@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rahener/core/blocs/user_cubit.dart';
 import 'package:rahener/core/blocs/user_state.dart';
-import 'package:rahener/core/models/auth_type.dart';
-import 'package:rahener/core/screens/profile/phone_auth.dart';
+import 'package:rahener/core/models/auth_exception.dart';
 import 'package:rahener/utils/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -15,23 +17,56 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // Widget _loginText();
-
-  // tell user why this is important
-
-  // Widget _loginText();
-  // Widget _loginButton();
-
-  // Widget _registerText();
-  // Widget _registerButton();
+  bool _inputIsValid = false;
+  final TextEditingController _phoneNumController = TextEditingController();
+  late final UserCubit _bloc;
 
   Widget _loggedInProfile() {
-    return Row(
-      children: [],
+    return ListView(
+      padding: EdgeInsets.all(16.0),
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            'Username',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Text(
+            _bloc.state.toString(),
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ),
+        Divider(), // Add a divider for visual separation
+        ListTile(
+          title: Text(
+            'Body Weight',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Text(
+            'bodyWeight kg',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          trailing: ElevatedButton(
+            onPressed: () {
+              _bloc.signout();
+            },
+            child: Text('Sign Out'),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _unLoggedProfile(UserCubit bloc) {
+  Widget _unLoggedProfile() {
     return Container(
       padding: const EdgeInsets.only(
           left: Constants.sideMargin, right: Constants.sideMargin),
@@ -40,43 +75,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Text(
-            'To be backup and restore your data, create an account or login\n',
+            'To be backup and restore your data, verify your phone number\n',
             style: TextStyle(fontSize: Constants.fontSize5),
             textAlign: TextAlign.center,
           ),
           const Text(
-            'an sms code will be sent to the number you provide below confirm your identity',
+            'an sms code will be sent to the number you provide below to confirm your identity',
             style: TextStyle(fontSize: Constants.fontSize3),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
-          InternationalPhoneNumberInput(
-            maxLength: 12,
-            initialValue: PhoneNumber(isoCode: 'IQ'),
-            onInputChanged: null,
-            selectorConfig: const SelectorConfig(
-                leadingPadding: 1, selectorType: PhoneInputSelectorType.DIALOG),
-            // selectorTextStyle: TextStyle(fontSize: 15),
-          ),
-          const SizedBox(height: 20),
+          _buildPhoneNumberInput(),
+          const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              OutlinedButton(
-                onPressed: () => _onSignUpButtonTapped(),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(150, 50),
-                ),
-                child: const Text('Sign Up'),
-              ),
-              ElevatedButton(
-                onPressed: () => _onLoginButtonTapped(bloc),
-                style: ElevatedButton.styleFrom(
-                  elevation: 3,
-                  minimumSize: const Size(150, 50),
-                ),
-                child: Text('Log In'),
-              ),
+              _buildSendSMSbutton(),
             ],
           ),
         ],
@@ -84,74 +98,264 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _onLoginButtonTapped(UserCubit bloc) {
-    // Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (context) => PhoneAuthScreen(
-    //           type: AuthType.login,
-    //           onSubmit: bloc.sendSms,
-    //         )));
-    //   void _showPhoneNumberDialog(BuildContext context) {
+  ElevatedButton _buildSendSMSbutton() {
+    return ElevatedButton(
+      onPressed: _inputIsValid ? () => _onSendSMSbuttonTapped() : null,
+      style: ElevatedButton.styleFrom(
+        elevation: 3,
+        minimumSize: const Size(150, 50),
+      ),
+      child: const Text('Send SMS Code'),
+    );
+  }
+
+  InternationalPhoneNumberInput _buildPhoneNumberInput() {
+    return InternationalPhoneNumberInput(
+      ignoreBlank: true,
+      formatInput: true,
+      onInputValidated: ((value) {
+        setState(() {
+          _inputIsValid = value;
+        });
+      }),
+      onInputChanged: ((value) {
+        // log(value.phoneNumber.toString());
+        _phoneNumController.text = value.phoneNumber.toString();
+        // log(phoneNumController.value.text);
+      }),
+      keyboardType: TextInputType.phone,
+      autoValidateMode: AutovalidateMode.onUserInteraction,
+      maxLength: 13,
+      initialValue: PhoneNumber(isoCode: 'IQ'),
+      selectorConfig: const SelectorConfig(
+          leadingPadding: 1, selectorType: PhoneInputSelectorType.DIALOG),
+    );
+  }
+
+  SimpleDialog _buildSMScodeDialog(
+      BuildContext context, TextEditingController verifSmsController) {
+    return SimpleDialog(
+      title: const Text(''),
+      contentPadding: const EdgeInsets.all(Constants.margin5),
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PinCodeTextField(
+                appContext: context, length: 6, controller: verifSmsController),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _onVerifySmsButtonTapped(verifSmsController),
+              child: const Text('Verify SMS'),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  SnackBar _buildAuthExceptionSnackbar({
+    required String message,
+    required String description,
+    required BuildContext context,
+  }) {
+    return SnackBar(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(message, style: const TextStyle(fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4), // Add some spacing
+          Text(description),
+        ],
+      ),
+      backgroundColor: Theme.of(context).colorScheme.error,
+      duration: const Duration(seconds: 5),
+      behavior: SnackBarBehavior.floating,
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    );
+  }
+
+  void _showChangeWeightDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Enter your phone number'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              InternationalPhoneNumberInput(
-                maxLength: 10,
-                initialValue: PhoneNumber(isoCode: 'IQ'),
-                onInputChanged: null,
-
-                selectorConfig: SelectorConfig(
-                    leadingPadding: 1,
-                    selectorType: PhoneInputSelectorType.DIALOG),
-                // selectorTextStyle: TextStyle(fontSize: 15),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: const Text('Send SMS'),
-              ),
-            ],
+          title: Text('Change Body Weight'),
+          content: TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: 'New Body Weight (kg)',
+            ),
+            onChanged: (value) {
+              setState(() {
+                // bodyWeight = double.tryParse(value) ?? bodyWeight;
+              });
+            },
           ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+          ],
         );
       },
     );
   }
 
-  void _onSignUpButtonTapped() {}
+  void _onSendSMSbuttonTapped() {
+    final TextEditingController verifSmsController = TextEditingController();
+    _bloc.sendSms(_phoneNumController.text);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return _buildSMScodeDialog(context, verifSmsController);
+      },
+    );
+  }
+
+  void _onVerifySmsButtonTapped(controller) {
+    _bloc.verifySms(controller.text);
+  }
+
+  void _handleUserExistsException() {
+    var snackBar = _buildAuthExceptionSnackbar(
+      context: context,
+      message: "User Already Exists",
+      description:
+          "Registration failed. User already exists in our system. Please log in or use a different email or username for registration.",
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _handleWrongCodeException() {
+    var snackBar = _buildAuthExceptionSnackbar(
+      context: context,
+      message: "wrong code",
+      description: "wrong code dawg",
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _handleTooManyRequestsException() {
+    var snackBar = _buildAuthExceptionSnackbar(
+      context: context,
+      message: "Too many requests",
+      description: "you attempted too many times",
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _handleInvalidPhoneNumberException() {
+    var snackBar = _buildAuthExceptionSnackbar(
+      context: context,
+      message: "Invalid Phone Number",
+      description:
+          "Phone number is invalid. The provided phone number is not in the expected format or is otherwise invalid. Please provide a valid phone number for registration.",
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _handleCodeTimeoutException() {
+    var snackBar = _buildAuthExceptionSnackbar(
+      context: context,
+      message: "Verification Code Expired",
+      description:
+          "Verification code has expired. The verification code you attempted to use has exceeded its expiration time. Please request a new code for verification.",
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _handleUnknownException() {
+    var snackBar = _buildAuthExceptionSnackbar(
+      context: context,
+      message: "Unknown Error",
+      description:
+          "An unknown error occurred. We encountered an unexpected issue that is not covered by specific error categories. Please reach out to our support team for further assistance.",
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  void initState() {
+    _bloc = BlocProvider.of<UserCubit>(context);
+    super.initState();
+  }
 
   @override
   void dispose() {
-    var bloc = BlocProvider.of<UserCubit>(context);
-    if (bloc.state.status != UserStatus.logged) {
-      bloc.abortAuthentication();
+    if (_bloc.state.status != UserStatus.logged) {
+      _bloc.abortAuthentication();
     }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<UserCubit>(context);
     // Future.delayed(const Duration(milliseconds: 5000), () {
     // bloc.signout();
     // });
     return Scaffold(
-        // maybe we will have a coupe
         appBar: AppBar(
-          title: Text("Profile"),
+          title: const Text("Profile"),
         ),
-        body: BlocBuilder<UserCubit, UserState>(
+        body: BlocConsumer<UserCubit, UserState>(
+          listenWhen: (previous, current) {
+            if (current.authException == AuthException.none) {
+              return false;
+            }
+            return true;
+          },
+          listener: (context, state) {
+            _bloc.abortAuthentication();
+            switch (state.authException) {
+              case AuthException.userExists:
+                _handleUserExistsException();
+                break;
+              case AuthException.codeTimeout:
+                _handleCodeTimeoutException();
+                break;
+              case AuthException.invalidPhoneNumber:
+                _handleInvalidPhoneNumberException();
+                break;
+              case AuthException.tooManyRequests:
+                _handleTooManyRequestsException();
+                break;
+              case AuthException.wrongCode:
+                _handleWrongCodeException();
+                break;
+              case AuthException.unknown:
+                _handleUnknownException();
+                break;
+              case AuthException.noInternetConnection:
+              case AuthException.none:
+                throw Exception(
+                    "Auth exception was handled when there were no exception");
+            }
+          },
+          buildWhen: (previous, current) {
+            return previous.status == current.status ? false : true;
+          },
           builder: (context, state) {
             if (state.status == UserStatus.notLogged) {
-              return _loggedInProfile();
+              return _unLoggedProfile();
             }
             if (state.status == UserStatus.logged) {
-              return _unLoggedProfile(bloc);
+              return _loggedInProfile();
             } else {
               return const CircularProgressIndicator();
             }

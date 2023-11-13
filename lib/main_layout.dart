@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
 import 'package:rahener/core/blocs/navigation_state.dart';
 import 'package:rahener/core/screens/Profile/profile.dart';
+import 'package:rahener/core/screens/Sessions/Sessions.dart';
 import 'package:rahener/core/screens/exercises/exercises_list.dart';
 import 'package:rahener/utils/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,7 +24,11 @@ class _MainLayoutState extends State<MainLayout> {
         return Scaffold(
           body: IndexedStack(
             index: state.currentIndex,
-            children: const [ExercisesListScreen(), ProfileScreen()],
+            children: const [
+              ExercisesListScreen(),
+              SessionsScreen(),
+              ProfileScreen()
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state.currentIndex,
@@ -34,6 +39,8 @@ class _MainLayoutState extends State<MainLayout> {
               BottomNavigationBarItem(
                   label: AppLocalizations.of(context)!.exercisesNavItem,
                   icon: const Icon(Constants.exercisesListIcon)),
+              const BottomNavigationBarItem(
+                  label: "Sessions", icon: Icon(Constants.sessionIcon)),
               BottomNavigationBarItem(
                   label: AppLocalizations.of(context)!.profileNavItem,
                   icon: const Icon(Constants.profileIcon)),

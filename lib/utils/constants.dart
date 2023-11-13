@@ -18,6 +18,17 @@ class Constants {
   static const chipSpacing = 12.0;
   static const chipRunSpacing = 5.0;
 
+  // font weights
+  static const double fontWeight1 = 10.0;
+  static const double fontWeight2 = 12.0;
+  static const double fontWeight3 = 14.0;
+  static const double fontWeight4 = 16.0;
+  static const double fontWeight5 = 18.0;
+  static const double fontWeight6 = 20.0;
+  static const double fontWeight7 = 24.0;
+  static const double fontWeight8 = 30.0;
+  static const double fontWeight9 = 36.0;
+
   // font sizes
 
   static const double fontSize1 = 10.0;
@@ -40,6 +51,8 @@ class Constants {
   static const IconData similarExercisesIcon = Icons.two_k;
   static const IconData emptyListIcon = Icons.cancel_outlined;
   static const IconData profileIcon = Icons.person_2;
+  static const IconData sessionIcon =
+      IconData(0xe28d, fontFamily: 'MaterialIcons');
   static const IconData exercisesListIcon = Icons.list_alt;
 
   static const double borderRadius = 10;
