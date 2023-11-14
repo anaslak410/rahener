@@ -7,6 +7,7 @@ import 'package:rahener/core/blocs/sessions_cubit.dart';
 import 'package:rahener/core/models/session.dart';
 import 'package:rahener/core/screens/Sessions/currentSessionSheet.dart';
 import 'package:rahener/core/screens/Sessions/session_card.dart';
+import 'package:rahener/utils/constants.dart';
 
 class SessionsScreen extends StatefulWidget {
   const SessionsScreen({super.key});
@@ -32,11 +33,48 @@ class _SessionsScreenState extends State<SessionsScreen> {
     });
   }
 
-  void _onDeleteSessionTapped(Session session) {
-    _sessionsCubit.removeSession(session);
+  void _onDeleteSessionTapped(Session session) async {
+    bool result = await _showSessionDeleteConfirmationDialog();
+    if (result) {
+      _sessionsCubit.removeSession(session);
+    }
   }
 
-  void _showSessionDeleteConfirmationDialog() {}
+  Future<bool> _showSessionDeleteConfirmationDialog() async {
+    bool wantsToCancel = false;
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Session?'),
+          content: Text(
+              'Are you sure you want to delete this session? It is not possible to restore it afterwards.'),
+          actions: <Widget>[
+            FilledButton(
+              child: Text('Delete Session'),
+              onPressed: () {
+                wantsToCancel = true;
+                Navigator.of(context).pop();
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Constants.borderRadius),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+    return wantsToCancel;
+  }
 
   @override
   Widget build(BuildContext context) {

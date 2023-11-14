@@ -54,6 +54,7 @@ class Constants {
   static const IconData sessionIcon =
       IconData(0xe28d, fontFamily: 'MaterialIcons');
   static const IconData exercisesListIcon = Icons.list_alt;
+  static const IconData progressIcon = Icons.trending_up;
 
   static const double borderRadius = 10;
   static const String testPhoneNUmber = "+17700000000";

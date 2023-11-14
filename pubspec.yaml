@@ -25,6 +25,7 @@ dependencies:
   # intl: ^0.18.0
   flutter_localizations:
     sdk: flutter
+  fl_chart: ^0.64.0
 
 dev_dependencies:
   arb_generator:

@@ -5,6 +5,7 @@ import 'package:rahener/core/blocs/navigation_state.dart';
 import 'package:rahener/core/screens/Profile/profile.dart';
 import 'package:rahener/core/screens/Sessions/Sessions.dart';
 import 'package:rahener/core/screens/exercises/exercises_list.dart';
+import 'package:rahener/core/screens/progress/progress_screen.dart';
 import 'package:rahener/utils/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,7 +28,8 @@ class _MainLayoutState extends State<MainLayout> {
             children: const [
               ExercisesListScreen(),
               SessionsScreen(),
-              ProfileScreen()
+              ProfileScreen(),
+              ProgressScreen()
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -35,6 +37,7 @@ class _MainLayoutState extends State<MainLayout> {
             onTap: (index) {
               return bloc.onNavItemTapped(context, index);
             },
+            type: BottomNavigationBarType.fixed, // This is all you need!
             items: [
               BottomNavigationBarItem(
                   label: AppLocalizations.of(context)!.exercisesNavItem,
@@ -44,6 +47,8 @@ class _MainLayoutState extends State<MainLayout> {
               BottomNavigationBarItem(
                   label: AppLocalizations.of(context)!.profileNavItem,
                   icon: const Icon(Constants.profileIcon)),
+              const BottomNavigationBarItem(
+                  label: "Progress", icon: Icon(Constants.progressIcon)),
             ],
           ),
         );
