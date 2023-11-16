@@ -5,8 +5,8 @@ import 'package:rahener/core/blocs/current_session_state.dart';
 import 'package:rahener/core/blocs/session_timer_cubit.dart';
 import 'package:rahener/core/blocs/sessions_cubit.dart';
 import 'package:rahener/core/models/session.dart';
-import 'package:rahener/core/screens/Sessions/currentSessionSheet.dart';
-import 'package:rahener/core/screens/Sessions/session_card.dart';
+import 'package:rahener/core/screens/sessions/current_session_sheet.dart';
+import 'package:rahener/core/screens/sessions/session_card.dart';
 import 'package:rahener/utils/constants.dart';
 
 class SessionsScreen extends StatefulWidget {

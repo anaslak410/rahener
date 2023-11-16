@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
 import 'package:rahener/core/blocs/navigation_state.dart';
 import 'package:rahener/core/screens/Profile/profile.dart';
-import 'package:rahener/core/screens/Sessions/Sessions.dart';
+import 'package:rahener/core/screens/sessions/sessions_screen.dart';
 import 'package:rahener/core/screens/exercises/exercises_list.dart';
 import 'package:rahener/core/screens/progress/progress_screen.dart';
 import 'package:rahener/utils/constants.dart';
