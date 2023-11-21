@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rahener/core/models/muscle_group.dart';
 import 'package:rahener/core/services/local_data.dart';
@@ -12,11 +14,15 @@ class ExercisesRepository {
   List<MuscleGroup> _muscleGroups = [];
   List<String> _equipment = [];
 
+  final _controller = StreamController<List<Exercise>>.broadcast();
+  Stream<List<Exercise>> get listen => _controller.stream;
+
   ExercisesRepository._create({required LocalDataService localJsonDataService})
       : _localJsonDataService = localJsonDataService;
 
   void addExercise(Exercise exercise) {
     _exercises.add(exercise);
+    _controller.sink.add(_exercises);
   }
 
   List<Exercise> get exercises {

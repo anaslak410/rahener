@@ -8,58 +8,99 @@ import 'package:rahener/core/models/session.dart';
 import 'package:rahener/core/repositories/sessions_repository.dart';
 
 class ExerciseProgressCubit extends Cubit<ExerciseProgressState> {
-  SessionsRepository _repository;
-  ExerciseProgressCubit(this._repository)
-      : super(ExerciseProgressState(exercises: [])) {
-    emit(state.copyWith(
-        exercises: _convertSessionsToLogs(_repository.sessions)));
-  }
-}
+  final SessionsRepository _repository;
+  ExerciseProgressCubit(this._repository) : super(ExerciseProgressLoading()) {
+    _subscribe();
 
-List<ExerciseLog> _convertSessionsToLogs(List<Session> sessions) {
-  List<ExerciseLog> exerciseLogs = [];
-  for (Session session in sessions) {
-    for (var exercise in session.exercisesPerfomed) {
-      String id = exercise.id;
-      ExerciseLog log =
-          exerciseLogs.firstWhere((element) => element.id == id, orElse: () {
-        ExerciseLog newLog = ExerciseLog(id: id, entries: []);
-        exerciseLogs.add(newLog);
-        return newLog;
-      });
-      double highestWeightLifted = 0;
-      for (ExerciseSet set in exercise.sets) {
-        if (set.weight > highestWeightLifted) {
-          highestWeightLifted = set.weight;
+    var exercises = _convertSessionsToLogs(_repository.sessions);
+    emit(ExerciseProgressLoaded(exercises: exercises, selectedExercise: null));
+  }
+
+  void _subscribe() {
+    _repository.listen.listen(
+      (items) {
+        ExerciseProgressLoaded newState = state as ExerciseProgressLoaded;
+        var exercises = _convertSessionsToLogs(items);
+        emit(newState.copyWith(exercises: exercises));
+      },
+      onError: (error) => log(error),
+    );
+  }
+
+  void selectExercise(String id) {
+    ExerciseProgressLoaded newState = state as ExerciseProgressLoaded;
+    emit(newState.copyWith(
+        selectedExercise:
+            newState.exercises.firstWhere((element) => element.id == id)));
+  }
+
+  List<ExerciseLog> _convertSessionsToLogs(List<Session> sessions) {
+    List<ExerciseLog> exerciseLogs = [];
+    for (Session session in sessions) {
+      for (var exercise in session.exercisesPerfomed) {
+        String id = exercise.id;
+        ExerciseLog log =
+            exerciseLogs.firstWhere((element) => element.id == id, orElse: () {
+          ExerciseLog newLog =
+              ExerciseLog(id: id, entries: [], name: exercise.name);
+          exerciseLogs.add(newLog);
+          return newLog;
+        });
+        double highestWeightLifted = 0;
+        for (ExerciseSet set in exercise.sets) {
+          if (set.weight > highestWeightLifted && set.reps != 0) {
+            highestWeightLifted = set.weight;
+          }
+        }
+        if (highestWeightLifted != 0) {
+          log.entries.add((highestWeightLifted, session.datePerformed));
         }
       }
-
-      log.entries.add((highestWeightLifted, session.datePerformed));
     }
+    return exerciseLogs;
   }
-  return exerciseLogs;
 }
 
-class ExerciseProgressState {
+class ExerciseProgressLoading extends ExerciseProgressState {}
+
+class ExerciseProgressLoaded extends ExerciseProgressState {
   final List<ExerciseLog> exercises;
-  ExerciseProgressState({
+  final ExerciseLog? selectedExercise;
+
+  ExerciseProgressLoaded({
+    this.selectedExercise,
     required this.exercises,
   });
 
-  ExerciseProgressState copyWith({
+  get availableExercises {
+    List<ExerciseLog> availableExercises = List.from(exercises);
+    if (selectedExercise != null) {
+      availableExercises
+          .removeWhere((element) => element.id == selectedExercise!.id);
+    }
+    return availableExercises;
+  }
+
+  ExerciseProgressLoaded copyWith({
     List<ExerciseLog>? exercises,
+    ExerciseLog? selectedExercise,
   }) {
-    return ExerciseProgressState(
+    return ExerciseProgressLoaded(
       exercises: exercises ?? this.exercises,
+      selectedExercise: selectedExercise ?? this.selectedExercise,
     );
   }
 }
 
+class ExerciseProgressState {}
+
 class ExerciseLog {
   final String id;
+  final String name;
   List<(double, DateTime)> entries;
 
   ExerciseLog({
+    required this.name,
     required this.id,
     required this.entries,
   });
@@ -72,10 +113,12 @@ class ExerciseLog {
 
   ExerciseLog copyWith({
     String? id,
+    String? name,
     List<(double, DateTime)>? entries,
   }) {
     return ExerciseLog(
       id: id ?? this.id,
+      name: name ?? this.name,
       entries: entries ?? this.entries,
     );
   }

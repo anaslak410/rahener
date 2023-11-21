@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
+import 'package:rahener/core/blocs/exercise_progress_cubit.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
 import 'package:rahener/core/blocs/current_session_cubit.dart';
 import 'package:rahener/core/blocs/session_timer_cubit.dart';
@@ -90,6 +91,9 @@ class MyApp extends StatelessWidget {
             BlocProvider<CurrentSessionCubit>(
               create: (context) =>
                   CurrentSessionCubit(repository: exercisesRepository),
+            ),
+            BlocProvider<ExerciseProgressCubit>(
+              create: (context) => ExerciseProgressCubit(sessionsRepository),
             ),
             BlocProvider<SessionTimerCubit>(
               create: (context) => SessionTimerCubit(),

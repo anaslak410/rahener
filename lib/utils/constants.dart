@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rahener/core/blocs/ExerciseSet.dart';
+import 'package:rahener/core/models/exercise.dart';
+import 'package:rahener/core/models/session.dart';
 
 class Constants {
   // margins
@@ -59,4 +62,72 @@ class Constants {
   static const double borderRadius = 10;
   static const String testPhoneNUmber = "+17700000000";
   static const String testVerificationCode = "111111";
+
+  static List<Session> testSessions = [
+    Session(
+      datePerformed: DateTime.parse("2023-11-12T19:45:00"),
+      duration: Duration(hours: 1),
+      exercisesPerfomed: [
+        SessionExercise(
+          id: "10",
+          name: "Plank",
+          equipment: "None",
+          primaryMuscles: ["Core"],
+          secondaryMuscles: ["Shoulders"],
+          tips: ["Keep your body in a straight line", "Engage your core"],
+          steps: [
+            "Start in a push-up position",
+            "Hold the position with a straight back"
+          ],
+          sets: [
+            ExerciseSet(reps: 30, weight: 0.0),
+            ExerciseSet(reps: 25, weight: 0.0),
+            ExerciseSet(reps: 20, weight: 0.0),
+          ],
+          similarExercises: <String>[],
+        ),
+        SessionExercise(
+          id: "12",
+          name: "Deadlift",
+          equipment: "Barbell",
+          primaryMuscles: ["Lower Back", "Hamstrings"],
+          secondaryMuscles: ["Glutes"],
+          tips: ["Keep your back straight", "Engage your core"],
+          steps: [
+            "Stand with feet hip-width apart",
+            "Lower the barbell to the ground",
+            "Stand back up"
+          ],
+          sets: [
+            ExerciseSet(reps: 12, weight: 100.0),
+            ExerciseSet(reps: 10, weight: 120.0),
+            ExerciseSet(reps: 8, weight: 140.0),
+          ],
+          similarExercises: <String>[],
+        ),
+        SessionExercise(
+          id: "15",
+          name: "Lunges",
+          equipment: "None",
+          primaryMuscles: ["Quadriceps", "Glutes"],
+          secondaryMuscles: ["Hamstrings"],
+          tips: [
+            "Step forward with good posture",
+            "Keep your knee directly above your ankle"
+          ],
+          steps: [
+            "Take a step forward with one leg",
+            "Lower your body until both knees are bent",
+            "Step back to the starting position"
+          ],
+          sets: [
+            ExerciseSet(reps: 15, weight: 5.0),
+            ExerciseSet(reps: 12, weight: 8.0),
+            ExerciseSet(reps: 10, weight: 0.0),
+          ],
+          similarExercises: <String>[],
+        ),
+      ],
+    ),
+  ];
 }
