@@ -8,7 +8,8 @@ import 'package:rahener/core/repositories/sessions_repository.dart';
 
 class SessionsCubit extends Cubit<SessionsState> {
   final SessionsRepository _repository;
-  SessionsCubit(this._repository) : super(SessionsState(sessions: [])) {
+  SessionsCubit(this._repository)
+      : super(SessionsState(sessions: _repository.sessions)) {
     _subscribe();
   }
 

@@ -21,7 +21,7 @@ class LineChartImp extends StatefulWidget {
 }
 
 class LineChartImpState extends State<LineChartImp> {
-  late List<FlSpot> spots;
+  List<FlSpot> _spots = [];
   final double _maxX = 0;
   double _smallestX = 0;
   late double _smallestY;
@@ -33,7 +33,6 @@ class LineChartImpState extends State<LineChartImp> {
   @override
   void initState() {
     super.initState();
-
     _initValues();
   }
 
@@ -48,7 +47,7 @@ class LineChartImpState extends State<LineChartImp> {
   }
 
   void _setSpots() {
-    spots = [];
+    _spots = [];
     for (var value in widget.values) {
       double timeDifference = -(_daysBetween(value.$2, DateTime.now()));
       if (timeDifference > 0) {
@@ -60,15 +59,15 @@ class LineChartImpState extends State<LineChartImp> {
       }
       var minX = _calcMinX();
       if (timeDifference >= minX) {
-        spots.add(FlSpot(timeDifference, value.$1));
+        _spots.add(FlSpot(timeDifference, value.$1));
       }
     }
   }
 
   void _setSmallestYandMaxY() {
-    _smallestY = spots[0].y;
+    _smallestY = _spots[0].y;
     _maxY = 0;
-    for (var spot in spots) {
+    for (var spot in _spots) {
       if (spot.y < _smallestY) {
         _smallestY = spot.y;
       }
@@ -101,6 +100,9 @@ class LineChartImpState extends State<LineChartImp> {
 
   double _calcMinY() {
     double minY = 0;
+    if (_smallestY == _maxY) {
+      return 0;
+    }
     if (_smallestY > (_maxY / 2)) {
       minY = ((_maxY - minY) / 2) + minY;
       while (_smallestY > ((_maxY - minY) / 2) + minY) {
@@ -111,7 +113,7 @@ class LineChartImpState extends State<LineChartImp> {
   }
 
   bool _thereIsEnoughData() {
-    return spots.length > 2;
+    return _spots.length > 2;
   }
 
   double _calcMinX() {
@@ -186,7 +188,7 @@ class LineChartImpState extends State<LineChartImp> {
     }
   }
 
-  LineTouchData get _lineTouchData => LineTouchData(
+  LineTouchData _lineTouchData() => LineTouchData(
       enabled: true,
       touchTooltipData: LineTouchTooltipData(
         getTooltipItems: (touchedSpots) {
@@ -199,9 +201,9 @@ class LineChartImpState extends State<LineChartImp> {
         },
       ));
 
-  FlTitlesData get _titlesData => FlTitlesData(
+  FlTitlesData _titlesData() => FlTitlesData(
         bottomTitles: AxisTitles(
-          sideTitles: _bottomTitles,
+          sideTitles: _bottomTitles(),
         ),
         rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
@@ -296,20 +298,20 @@ class LineChartImpState extends State<LineChartImp> {
     );
   }
 
-  SideTitles get _bottomTitles => SideTitles(
+  SideTitles _bottomTitles() => SideTitles(
         showTitles: true,
         reservedSize: 50,
         interval: _xinterval,
         getTitlesWidget: _bottomTitleWidgets,
       );
 
-  FlGridData get _gridData => FlGridData(
+  FlGridData _gridData() => FlGridData(
         show: true,
         drawVerticalLine: false,
         verticalInterval: _yinterval,
       );
 
-  FlBorderData get _borderData => FlBorderData(
+  FlBorderData _borderData() => FlBorderData(
         show: true,
         border: Border(
           bottom: BorderSide(
@@ -321,10 +323,10 @@ class LineChartImpState extends State<LineChartImp> {
         ),
       );
 
-  LineChartBarData get _lineChartBarData => LineChartBarData(
+  LineChartBarData _lineChartBarData() => LineChartBarData(
       isCurved: false,
       color: Theme.of(context).primaryColor,
-      barWidth: 2,
+      barWidth: 1,
       dotData: FlDotData(
         show: true,
         getDotPainter: (p0, p1, p2, p3) {
@@ -336,7 +338,36 @@ class LineChartImpState extends State<LineChartImp> {
       ),
       belowBarData: BarAreaData(show: false),
       isStrokeJoinRound: false,
-      spots: spots);
+      spots: _spots);
+
+  LineChart _emptyLineChart(BuildContext context) {
+    return LineChart(
+      LineChartData(
+        backgroundColor: Theme.of(context).colorScheme.onSecondary,
+        lineBarsData: [
+          LineChartBarData(
+              isCurved: false,
+              color: Theme.of(context).primaryColor,
+              barWidth: 2,
+              belowBarData: BarAreaData(show: false),
+              isStrokeJoinRound: false,
+              spots: [])
+        ],
+        gridData: const FlGridData(
+            show: true,
+            drawVerticalLine: false,
+            horizontalInterval: 1,
+            verticalInterval: 1),
+        titlesData: const FlTitlesData(show: false),
+        borderData: FlBorderData(show: false),
+        maxX: 5,
+        minX: 0,
+        maxY: 5,
+        minY: 0,
+      ),
+      duration: const Duration(milliseconds: 250),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -364,11 +395,11 @@ class LineChartImpState extends State<LineChartImp> {
                     LineChartData(
                       backgroundColor:
                           Theme.of(context).colorScheme.onSecondary,
-                      lineTouchData: _lineTouchData,
-                      gridData: _gridData,
-                      titlesData: _titlesData,
-                      borderData: _borderData,
-                      lineBarsData: [_lineChartBarData],
+                      lineTouchData: _lineTouchData(),
+                      gridData: _gridData(),
+                      titlesData: _titlesData(),
+                      borderData: _borderData(),
+                      lineBarsData: [_lineChartBarData()],
                       maxX: _maxX,
                       minX: _calcMinX(),
                       maxY: _maxY,
@@ -378,24 +409,9 @@ class LineChartImpState extends State<LineChartImp> {
                   )
                 : Stack(
                     children: [
-                      LineChart(
-                        LineChartData(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.onSecondary,
-                          lineTouchData: _lineTouchData,
-                          gridData: _gridData,
-                          titlesData: _titlesData,
-                          borderData: _borderData,
-                          lineBarsData: [],
-                          maxX: 0,
-                          minX: 0,
-                          maxY: 0,
-                          minY: 0,
-                        ),
-                        duration: const Duration(milliseconds: 250),
-                      ),
-                      Center(
-                        child: const Text(
+                      _emptyLineChart(context),
+                      const Center(
+                        child: Text(
                           'Not enough data to create a chart.',
                           style: TextStyle(fontSize: 16),
                         ),

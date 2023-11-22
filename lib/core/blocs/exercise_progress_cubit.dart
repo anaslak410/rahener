@@ -2,8 +2,9 @@
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rahener/core/blocs/exercie_progress_state.dart';
 
-import 'package:rahener/core/blocs/ExerciseSet.dart';
+import 'package:rahener/core/blocs/exercise_set.dart';
 import 'package:rahener/core/models/session.dart';
 import 'package:rahener/core/repositories/sessions_repository.dart';
 
@@ -61,35 +62,6 @@ class ExerciseProgressCubit extends Cubit<ExerciseProgressState> {
     return exerciseLogs;
   }
 }
-
-class ExerciseProgressLoading extends ExerciseProgressState {}
-
-class ExerciseProgressLoaded extends ExerciseProgressState {
-  final List<ExerciseLog> exercises;
-  final ExerciseLog? selectedExercise;
-
-  ExerciseProgressLoaded({
-    this.selectedExercise,
-    required this.exercises,
-  });
-
-  get availableExercises {
-    List<ExerciseLog> availableExercises = List.from(exercises);
-    return availableExercises;
-  }
-
-  ExerciseProgressLoaded copyWith({
-    List<ExerciseLog>? exercises,
-    ExerciseLog? selectedExercise,
-  }) {
-    return ExerciseProgressLoaded(
-      exercises: exercises ?? this.exercises,
-      selectedExercise: selectedExercise ?? this.selectedExercise,
-    );
-  }
-}
-
-class ExerciseProgressState {}
 
 class ExerciseLog {
   final String id;

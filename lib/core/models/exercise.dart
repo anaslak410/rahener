@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:rahener/core/blocs/ExerciseSet.dart';
+import 'package:rahener/core/blocs/exercise_set.dart';
 
 class Exercise {
   final String id;
