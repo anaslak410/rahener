@@ -46,6 +46,7 @@ class ExerciseProgressCubit extends Cubit<ExerciseProgressState> {
           exerciseLogs.add(newLog);
           return newLog;
         });
+
         double highestWeightLifted = 0;
         for (ExerciseSet set in exercise.sets) {
           if (set.weight > highestWeightLifted && set.reps != 0) {
@@ -74,10 +75,6 @@ class ExerciseProgressLoaded extends ExerciseProgressState {
 
   get availableExercises {
     List<ExerciseLog> availableExercises = List.from(exercises);
-    if (selectedExercise != null) {
-      availableExercises
-          .removeWhere((element) => element.id == selectedExercise!.id);
-    }
     return availableExercises;
   }
 

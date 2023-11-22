@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class LineChartImpState extends State<LineChartImp> {
   late List<FlSpot> spots;
   final double _maxX = 0;
   double _smallestX = 0;
-  final double _minY = 1;
+  late double _smallestY;
   late double _maxY;
   ProgressTimeSpan _timeSpan = ProgressTimeSpan.lastThreeMonths;
   late double _yinterval;
@@ -32,7 +33,13 @@ class LineChartImpState extends State<LineChartImp> {
   @override
   void initState() {
     super.initState();
+
+    _initValues();
+  }
+
+  void _initValues() {
     _setSpots();
+    _setSmallestYandMaxY();
     _setYinterval();
     _setXinterval();
 
@@ -42,7 +49,6 @@ class LineChartImpState extends State<LineChartImp> {
 
   void _setSpots() {
     spots = [];
-    _maxY = 0;
     for (var value in widget.values) {
       double timeDifference = -(_daysBetween(value.$2, DateTime.now()));
       if (timeDifference > 0) {
@@ -55,9 +61,19 @@ class LineChartImpState extends State<LineChartImp> {
       var minX = _calcMinX();
       if (timeDifference >= minX) {
         spots.add(FlSpot(timeDifference, value.$1));
-        if (value.$1 > _maxY) {
-          _maxY = value.$1;
-        }
+      }
+    }
+  }
+
+  void _setSmallestYandMaxY() {
+    _smallestY = spots[0].y;
+    _maxY = 0;
+    for (var spot in spots) {
+      if (spot.y < _smallestY) {
+        _smallestY = spot.y;
+      }
+      if (spot.y > _maxY) {
+        _maxY = spot.y;
       }
     }
   }
@@ -80,8 +96,22 @@ class LineChartImpState extends State<LineChartImp> {
     var minX = _calcMinX();
     log(minX.toString());
     _xinterval = (-1 * minX) / 7;
-    // _xinterval = 1;
     log(_xinterval.toString());
+  }
+
+  double _calcMinY() {
+    double minY = 0;
+    if (_smallestY > (_maxY / 2)) {
+      minY = ((_maxY - minY) / 2) + minY;
+      while (_smallestY > ((_maxY - minY) / 2) + minY) {
+        minY = ((_maxY - minY) / 2) + minY;
+      }
+    }
+    return minY;
+  }
+
+  bool _thereIsEnoughData() {
+    return spots.length > 2;
   }
 
   double _calcMinX() {
@@ -98,7 +128,7 @@ class LineChartImpState extends State<LineChartImp> {
   }
 
   void _setYinterval() {
-    switch (_maxY) {
+    switch (_maxY - _calcMinY()) {
       case < 20:
         _yinterval = 1;
       case < 40:
@@ -121,10 +151,7 @@ class LineChartImpState extends State<LineChartImp> {
   void _onTimeSpanChanged(ProgressTimeSpan newTimeSpan) {
     setState(() {
       _timeSpan = newTimeSpan;
-      _setSpots();
-      _calcMinX();
-      _setXinterval();
-      _setYinterval();
+      _initValues();
     });
   }
 
@@ -253,7 +280,7 @@ class LineChartImpState extends State<LineChartImp> {
         text = Text("${months[date.month]}", style: style);
         break;
       case < 1000:
-        text = Text("${date.year}\n-${date.month}", style: style);
+        text = Text("${date.year}\n${months[date.month]}", style: style);
         break;
       default:
         text = Text("${date.year}", style: style);
@@ -271,7 +298,7 @@ class LineChartImpState extends State<LineChartImp> {
 
   SideTitles get _bottomTitles => SideTitles(
         showTitles: true,
-        reservedSize: 32,
+        reservedSize: 50,
         interval: _xinterval,
         getTitlesWidget: _bottomTitleWidgets,
       );
@@ -298,7 +325,15 @@ class LineChartImpState extends State<LineChartImp> {
       isCurved: false,
       color: Theme.of(context).primaryColor,
       barWidth: 2,
-      dotData: const FlDotData(show: true),
+      dotData: FlDotData(
+        show: true,
+        getDotPainter: (p0, p1, p2, p3) {
+          return FlDotCirclePainter(
+              radius: 3,
+              color: Theme.of(context).colorScheme.primary,
+              strokeWidth: 0);
+        },
+      ),
       belowBarData: BarAreaData(show: false),
       isStrokeJoinRound: false,
       spots: spots);
@@ -324,21 +359,49 @@ class LineChartImpState extends State<LineChartImp> {
             height: 400,
             padding:
                 const EdgeInsets.only(left: 10, right: 20, top: 5, bottom: 20),
-            child: LineChart(
-              LineChartData(
-                backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                lineTouchData: _lineTouchData,
-                gridData: _gridData,
-                titlesData: _titlesData,
-                borderData: _borderData,
-                lineBarsData: [_lineChartBarData],
-                maxX: _maxX,
-                minX: _calcMinX(),
-                maxY: _maxY,
-                minY: _minY,
-              ),
-              duration: const Duration(milliseconds: 250),
-            ),
+            child: _thereIsEnoughData()
+                ? LineChart(
+                    LineChartData(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.onSecondary,
+                      lineTouchData: _lineTouchData,
+                      gridData: _gridData,
+                      titlesData: _titlesData,
+                      borderData: _borderData,
+                      lineBarsData: [_lineChartBarData],
+                      maxX: _maxX,
+                      minX: _calcMinX(),
+                      maxY: _maxY,
+                      minY: _calcMinY(),
+                    ),
+                    duration: const Duration(milliseconds: 250),
+                  )
+                : Stack(
+                    children: [
+                      LineChart(
+                        LineChartData(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.onSecondary,
+                          lineTouchData: _lineTouchData,
+                          gridData: _gridData,
+                          titlesData: _titlesData,
+                          borderData: _borderData,
+                          lineBarsData: [],
+                          maxX: 0,
+                          minX: 0,
+                          maxY: 0,
+                          minY: 0,
+                        ),
+                        duration: const Duration(milliseconds: 250),
+                      ),
+                      Center(
+                        child: const Text(
+                          'Not enough data to create a chart.',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
