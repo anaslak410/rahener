@@ -3,60 +3,12 @@ import 'package:rahener/core/blocs/exercise_progress_cubit.dart';
 import 'package:rahener/core/widgets/exercise_card.dart';
 import 'package:rahener/utils/constants.dart';
 
-// class SelectExerciseProgressDialog extends StatelessWidget {
-//   final List<ExerciseLog> availableExercises;
-//   final Function onExerciseSelected;
-//   const SelectExerciseProgressDialog(
-//       this.availableExercises, this.onExerciseSelected,
-//       {super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (availableExercises.isEmpty) {
-//       return AlertDialog(
-//         title: const Text("No Exercises Available"),
-//         content: const Text(
-//             "You haven't performed any sessions to extract exercises from."),
-//         actions: [
-//           TextButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//             child: const Text("OK"),
-//           ),
-//         ],
-//       );
-//     }
-//     return AlertDialog(
-//       content: SizedBox(
-//         height: 200,
-//         width: 150,
-//         child: ListView.builder(
-//           shrinkWrap: true,
-//           itemCount: availableExercises.length,
-//           itemBuilder: (context, index) {
-//             ExerciseLog exercise = availableExercises[index];
-//             return ListTile(
-//               horizontalTitleGap: 1,
-//               title: Text(
-//                 exercise.name,
-//                 style: TextStyle(),
-//                 textAlign: TextAlign.center,
-//               ),
-//               onTap: () => onExerciseSelected(exercise.id),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class SelectExerciseProgressDialog extends StatefulWidget {
   final List<ExerciseLog> availableExercises;
   final Function onExerciseSelected;
 
-  SelectExerciseProgressDialog(this.availableExercises, this.onExerciseSelected,
+  const SelectExerciseProgressDialog(
+      this.availableExercises, this.onExerciseSelected,
       {Key? key})
       : super(key: key);
 

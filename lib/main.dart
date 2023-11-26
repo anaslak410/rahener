@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/blocs/exercise_progress_cubit.dart';
+import 'package:rahener/core/blocs/measurements_cubit.dart';
 import 'package:rahener/core/blocs/navigation_cubit.dart';
 import 'package:rahener/core/blocs/current_session_cubit.dart';
 import 'package:rahener/core/blocs/session_timer_cubit.dart';
 import 'package:rahener/core/blocs/sessions_cubit.dart';
 import 'package:rahener/core/blocs/user_cubit.dart';
+import 'package:rahener/core/models/measurement.dart';
+import 'package:rahener/core/repositories/measurement_repository.dart';
 import 'package:rahener/core/repositories/sessions_repository.dart';
 import 'package:rahener/core/services/auth_service.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
@@ -42,6 +45,8 @@ void main() async {
       await SessionsRepository.create(localDataService: localDataService);
   ExercisesRepository exercisesRepository =
       await ExercisesRepository.create(localDataService: localDataService);
+  MeasurementsRepository measurementsRepository =
+      await MeasurementsRepository.create(localDataService: localDataService);
 
   runApp(MyApp(
     locale: locale,
@@ -49,6 +54,7 @@ void main() async {
     authService: authService,
     firestoreService: firestoreService,
     sessionsRepository: sessionsRepository,
+    measurementsRepository: measurementsRepository,
   ));
 }
 
@@ -56,6 +62,7 @@ class MyApp extends StatelessWidget {
   final Locale _locale;
   final ExercisesRepository exercisesRepository;
   final SessionsRepository sessionsRepository;
+  final MeasurementsRepository measurementsRepository;
   final AuthService authService;
   final FirestoreService firestoreService;
 
@@ -65,7 +72,8 @@ class MyApp extends StatelessWidget {
       required this.firestoreService,
       required Locale locale,
       required this.authService,
-      required this.sessionsRepository})
+      required this.sessionsRepository,
+      required this.measurementsRepository})
       : _locale = locale;
 
   @override
@@ -100,6 +108,10 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<SessionsCubit>(
               create: (context) => SessionsCubit(sessionsRepository),
+            ),
+            BlocProvider<MeasurementsCubit>(
+              create: (context) =>
+                  MeasurementsCubit(repository: measurementsRepository),
             ),
             BlocProvider<NavigationCubit>(
               create: (context) => NavigationCubit(startingIndex: 0),

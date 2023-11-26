@@ -1,39 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class Measurement {
-  final double value;
   final String name;
-  final DateTime entryDate;
+  final String unit;
+
   Measurement({
-    required this.value,
     required this.name,
-    required this.entryDate,
+    required this.unit,
   });
 
   Measurement copyWith({
-    double? value,
     String? name,
-    DateTime? entryDate,
+    String? unit,
   }) {
     return Measurement(
-      value: value ?? this.value,
       name: name ?? this.name,
-      entryDate: entryDate ?? this.entryDate,
+      unit: unit ?? this.unit,
     );
   }
 
   @override
-  String toString() =>
-      'Measurement(value: $value, name: $name, entryDate: $entryDate)';
-
-  @override
-  bool operator ==(covariant Measurement other) {
-    if (identical(this, other)) return true;
-
-    return other.value == value &&
-        other.name == name &&
-        other.entryDate == entryDate;
-  }
-
-  @override
-  int get hashCode => value.hashCode ^ name.hashCode ^ entryDate.hashCode;
+  String toString() => 'Measurement(name: $name, unit: $unit)';
 }

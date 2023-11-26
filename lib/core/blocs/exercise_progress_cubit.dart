@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/exercie_progress_state.dart';
 
-import 'package:rahener/core/blocs/exercise_set.dart';
+import 'package:rahener/core/models/exercise_set.dart';
 import 'package:rahener/core/models/session.dart';
 import 'package:rahener/core/repositories/sessions_repository.dart';
 

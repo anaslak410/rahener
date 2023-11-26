@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rahener/core/blocs/exercise_set.dart';
+import 'package:rahener/core/models/exercise_set.dart';
 import 'package:rahener/core/models/exercise.dart';
+import 'package:rahener/core/models/measurement.dart';
 import 'package:rahener/core/models/session.dart';
 
 class Constants {
@@ -62,6 +63,10 @@ class Constants {
   static const double borderRadius = 10;
   static const String testPhoneNUmber = "+17700000000";
   static const String testVerificationCode = "111111";
+
+  static List<Measurement> testMeasurements = [
+    Measurement(name: "Weight", unit: "kg"),
+  ];
 
   static List<Session> testSessions = generateProgressTestingSessions();
 

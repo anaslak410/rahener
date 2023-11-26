@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rahener/core/blocs/exercise_set.dart';
+import 'package:rahener/core/models/exercise_set.dart';
 import 'package:rahener/core/models/exercise.dart';
 import 'package:rahener/utils/constants.dart';
 

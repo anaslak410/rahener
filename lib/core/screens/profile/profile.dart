@@ -7,6 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rahener/core/blocs/user_cubit.dart';
 import 'package:rahener/core/blocs/user_state.dart';
 import 'package:rahener/core/models/auth_exception.dart';
+import 'package:rahener/core/screens/profile/measurements_panel.dart';
 import 'package:rahener/utils/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -40,28 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-        Divider(), // Add a divider for visual separation
-        ListTile(
-          title: Text(
-            'Body Weight',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Text(
-            'bodyWeight kg',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          trailing: ElevatedButton(
-            onPressed: () {
-              _bloc.signout();
-            },
-            child: Text('Sign Out'),
-          ),
-        ),
+        const Divider(), // Add a divider for visual separation
+        MeasurementsPanel()
       ],
     );
   }
@@ -352,10 +333,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           builder: (context, state) {
             if (state.status == UserStatus.notLogged) {
-              return _unLoggedProfile();
+              return _loggedInProfile();
             }
             if (state.status == UserStatus.logged) {
-              return _loggedInProfile();
+              return _unLoggedProfile();
             } else {
               return const CircularProgressIndicator();
             }

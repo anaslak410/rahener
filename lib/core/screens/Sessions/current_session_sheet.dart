@@ -72,6 +72,7 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
           title: Text('Cancel Workout?'),
           content: Text(
               'Are you sure you want to cancel this session? All progress will be lost.'),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
           actions: <Widget>[
             FilledButton(
               child: Text('Cancel Session'),
@@ -99,12 +100,11 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
     return wantsToCancel;
   }
 
-  void _onFinishExerciseButtonPressed() {
+  void _onFinishSessionButtonPressed() {
     if (_bloc.state.exercisesPerfomed.isEmpty) {
       _onDiscardButtonPressed();
     } else {
       Duration duration = context.read<SessionTimerCubit>().state;
-      log("exercise finished");
       log(_bloc.state.exercisesPerfomed.toString());
       context.read<SessionsCubit>().addSession(_bloc.getSession(duration));
       var snackbar = _buildSessionSavedSnackbar(
@@ -160,7 +160,7 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FinishSessionButton(onPressed: _onFinishExerciseButtonPressed),
+          FinishSessionButton(onPressed: _onFinishSessionButtonPressed),
           BlocBuilder<SessionTimerCubit, Duration>(
             builder: (context, stat) {
               return Text(
