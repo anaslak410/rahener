@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/blocs/measurements_cubit.dart';
 import 'package:rahener/core/models/measurement.dart';
+import 'package:rahener/core/screens/profile/add_measurement_dialog.dart';
+import 'package:rahener/core/screens/profile/measurement_entries_screen.dart';
 import 'package:rahener/utils/constants.dart';
 
 class MeasurementsPanel extends StatefulWidget {
@@ -22,7 +24,20 @@ class _MeasurementsPanelState extends State<MeasurementsPanel> {
     super.initState();
   }
 
-  void _onMeasurementPressed() {}
+  void _onMeasurementPressed(Measurement measurement) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return BlocProvider.value(
+              value: _bloc,
+              child: MeasurementEntriesScreen(
+                measurement: measurement,
+              ));
+        },
+      ),
+    );
+  }
 
   void _onEditButtonPressed() {
     setState(() {
@@ -189,7 +204,8 @@ class _MeasurementsPanelState extends State<MeasurementsPanel> {
                             : Icon(Icons.arrow_right),
                         onTap: _editIsActive
                             ? null
-                            : () => _onMeasurementPressed(),
+                            : () => _onMeasurementPressed(
+                                state.measurements[index]),
                       );
                     });
               } else {
@@ -200,79 +216,6 @@ class _MeasurementsPanelState extends State<MeasurementsPanel> {
             }),
             _editIsActive ? _buildAddMeasurementButton() : Container()
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class AddMeasurementDialog extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController unitController = TextEditingController();
-  final Function onConfirmPressed;
-  final _formKey = GlobalKey<FormState>();
-
-  AddMeasurementDialog({super.key, required this.onConfirmPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                  counterText: '', labelText: "Name", filled: true),
-              validator: (value) {
-                if (value == "") {
-                  return 'Please enter a name';
-                }
-                return null;
-              },
-              maxLength: 30,
-              controller: nameController,
-            ),
-            const SizedBox(
-              height: Constants.margin4,
-            ),
-            TextFormField(
-              controller: unitController,
-              maxLength: 5,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.deny(RegExp('[0-9]')),
-              ],
-              validator: (value) {
-                if (value == "") {
-                  return 'Please enter a unit';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                  counterText: '', labelText: "Unit", filled: true),
-            ),
-          ],
-        ),
-      ),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              Measurement measurement = Measurement(
-                  name: nameController.text, unit: unitController.text);
-              onConfirmPressed(measurement);
-              Navigator.of(context).pop();
-            }
-          },
-          child: const Text('Confirm'),
         ),
       ],
     );

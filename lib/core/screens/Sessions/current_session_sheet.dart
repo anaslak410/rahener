@@ -256,8 +256,6 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
                           ScrollController scrollController) {
                         _animationController.forward();
                         return Container(
-                          // height: MediaQuery.of(context).size.height * 0.9,
-                          // width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: Theme.of(context)
                                 .colorScheme

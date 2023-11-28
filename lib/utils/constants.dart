@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rahener/core/models/exercise_set.dart';
 import 'package:rahener/core/models/exercise.dart';
 import 'package:rahener/core/models/measurement.dart';
+import 'package:rahener/core/models/measurement_entry.dart';
 import 'package:rahener/core/models/session.dart';
 
 class Constants {
@@ -64,11 +65,48 @@ class Constants {
   static const String testPhoneNUmber = "+17700000000";
   static const String testVerificationCode = "111111";
 
+  // value constraints
+
+  static const int maxMeasurementEntry = 6;
+
+  // testing
   static List<Measurement> testMeasurements = [
     Measurement(name: "Weight", unit: "kg"),
   ];
 
   static List<Session> testSessions = generateProgressTestingSessions();
+
+  static Map<String, List<MeasurementEntry>> testMeasurementEntries = {
+    testMeasurements[0].name: [
+      MeasurementEntry(
+          value: 79,
+          entryDate: DateTime.now().subtract(const Duration(days: 400))),
+      MeasurementEntry(
+          value: 80,
+          entryDate: DateTime.now().subtract(const Duration(days: 90))),
+      MeasurementEntry(
+          value: 74,
+          entryDate: DateTime.now().subtract(const Duration(days: 80))),
+      MeasurementEntry(
+          value: 73.2,
+          entryDate: DateTime.now().subtract(const Duration(days: 35))),
+      MeasurementEntry(
+          value: 50,
+          entryDate: DateTime.now().subtract(const Duration(days: 30))),
+      MeasurementEntry(
+          value: 65.3,
+          entryDate: DateTime.now().subtract(const Duration(days: 7))),
+      MeasurementEntry(
+          value: 65.4,
+          entryDate: DateTime.now().subtract(const Duration(days: 3))),
+      MeasurementEntry(
+          value: 70,
+          entryDate: DateTime.now().subtract(const Duration(days: 1))),
+      MeasurementEntry(
+          value: 65,
+          entryDate: DateTime.now().subtract(const Duration(days: 0))),
+    ]
+  };
 
   static List<Session> generateProgressTestingSessions() {
     List<Session> sessions = [];

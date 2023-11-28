@@ -65,7 +65,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     height: Constants.margin4,
                   ),
                   state.selectedExercise != null
-                      ? LineChartImp(
+                      ? ProgressChart(
                           name: state.selectedExercise!.name,
                           values: state.selectedExercise!.entries
                           // [

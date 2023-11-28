@@ -89,6 +89,7 @@ class _SessionsScreenState extends State<SessionsScreen> {
               : SizedBox(
                   width: 400,
                   child: FloatingActionButton(
+                    heroTag: "session",
                     onPressed: () =>
                         _onStartSessionTapped(timerCubit, currentSessionBloc),
                     child: const Text("Start Session"),
@@ -118,11 +119,18 @@ class _SessionsScreenState extends State<SessionsScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.fitness_center,
-                            size: 64.0,
-                            color: Colors.grey,
-                          ),
+                          Stack(children: [
+                            Icon(
+                              Icons.close_outlined,
+                              size: 64.0,
+                              color: Colors.grey,
+                            ),
+                            Icon(
+                              Icons.fitness_center,
+                              size: 64.0,
+                              color: Colors.grey,
+                            ),
+                          ]),
                           SizedBox(height: 16.0),
                           Text(
                             'No sessions done yet',

@@ -91,7 +91,7 @@ class _CustomExerciseState extends State<CustomExercise> {
   Widget _addStepButton() {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(350, 40), // NEW
+        minimumSize: const Size(350, 40),
       ),
       onPressed: _exerciseStepsControllers.length > 14
           ? null
@@ -236,6 +236,7 @@ class _CustomExerciseState extends State<CustomExercise> {
 
   Widget _saveButton(bloc) {
     return FloatingActionButton.extended(
+        heroTag: "custom exercise",
         label: const Text("Save"),
         icon: Icon(Icons.save), // Save icon
         onPressed: () => _onSaveButtonTapped(bloc));

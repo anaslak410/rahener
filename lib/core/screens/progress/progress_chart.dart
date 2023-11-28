@@ -6,21 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:rahener/core/screens/progress/progress_chart_timespan.dart';
 import 'package:rahener/utils/constants.dart';
 
-class LineChartImp extends StatefulWidget {
+class ProgressChart extends StatefulWidget {
   final List<(double, DateTime)> values;
   final String name;
 
-  const LineChartImp({
+  const ProgressChart({
     Key? key,
     required this.values,
     required this.name,
   }) : super(key: key);
 
   @override
-  State<LineChartImp> createState() => LineChartImpState();
+  State<ProgressChart> createState() => ProgressChartState();
 }
 
-class LineChartImpState extends State<LineChartImp> {
+class ProgressChartState extends State<ProgressChart> {
   List<FlSpot> _spots = [];
   final double _maxX = 0;
   double _smallestX = 0;
@@ -37,10 +37,12 @@ class LineChartImpState extends State<LineChartImp> {
   }
 
   void _initValues() {
-    _setSpots();
-    _setSmallestYandMaxY();
-    _setYinterval();
-    _setXinterval();
+    if (widget.values.isNotEmpty) {
+      _setSpots();
+      _setSmallestYandMaxY();
+      _setYinterval();
+      _setXinterval();
+    }
 
     log("max x is : ${_maxX.toString()}");
     log("min x is : ${_smallestX.toString()}");
@@ -112,7 +114,7 @@ class LineChartImpState extends State<LineChartImp> {
     return minY;
   }
 
-  bool _thereIsEnoughData() {
+  bool _thereAreEnoughSpots() {
     return _spots.length > 2;
   }
 
@@ -146,7 +148,7 @@ class LineChartImpState extends State<LineChartImp> {
       case < 2000:
         _yinterval = 100;
       case > 2000:
-        throw Exception("weight bigger than 2000");
+        _yinterval = (_maxY - _calcMinY()) / 20;
     }
   }
 
@@ -390,7 +392,7 @@ class LineChartImpState extends State<LineChartImp> {
             height: 400,
             padding:
                 const EdgeInsets.only(left: 10, right: 20, top: 5, bottom: 20),
-            child: _thereIsEnoughData()
+            child: _thereAreEnoughSpots()
                 ? LineChart(
                     LineChartData(
                       backgroundColor:

@@ -4,11 +4,9 @@ import 'dart:convert';
 import 'package:rahener/core/models/measurement.dart';
 
 class MeasurementEntry {
-  final String measurementId;
   final double value;
   final DateTime entryDate;
   MeasurementEntry({
-    required this.measurementId,
     required this.value,
     required this.entryDate,
   });
@@ -19,7 +17,6 @@ class MeasurementEntry {
     DateTime? entryDate,
   }) {
     return MeasurementEntry(
-      measurementId: measurementId ?? this.measurementId,
       value: value ?? this.value,
       entryDate: entryDate ?? this.entryDate,
     );

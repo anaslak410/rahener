@@ -55,6 +55,7 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
     var bloc = BlocProvider.of<ExerciseListCubit>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: "list exercise",
         child: const Icon(Icons.add),
         onPressed: (() {
           bloc.onCreateExerciseButtonTapped(context);

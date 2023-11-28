@@ -15,16 +15,25 @@ class MeasurementsCubit extends Cubit<MeasurementsState> {
       : _repository = repository,
         super(MeasurementsLoading()) {
     var measurements = _repository.measurements;
-    emit(
-        MeasurementsLoaded(measurements: measurements, measurementEntries: {}));
+    var measurementEntries = _repository.measurementEntries;
+    emit(MeasurementsLoaded(
+        measurements: measurements, measurementEntries: measurementEntries));
 
     _subscribe();
   }
   void _subscribe() {
     _repository.measurementsStream.listen(
       (items) {
-        MeasurementsLoaded newState = state as MeasurementsLoaded;
-        emit(newState.copyWith(measurements: items));
+        MeasurementsLoaded oldState = state as MeasurementsLoaded;
+        emit(oldState.copyWith(measurements: items));
+      },
+      onError: (error) => log(error),
+    );
+
+    _repository.measurementEntriesStream.listen(
+      (items) {
+        MeasurementsLoaded oldState = state as MeasurementsLoaded;
+        emit(oldState.copyWith(measurementEntries: items));
       },
       onError: (error) => log(error),
     );
@@ -36,6 +45,18 @@ class MeasurementsCubit extends Cubit<MeasurementsState> {
 
   void removeMeasurement(String name) {
     _repository.removeMeasurement(name);
+  }
+
+  void addMeasurementEntry(MeasurementEntry measurement, String name) {
+    _repository.addMeasurementEntry(measurement, name);
+  }
+
+  void removeMeasurementEntry(int index, String name) {
+    _repository.removeMeasurementEntry(index, name);
+  }
+
+  void editMeasurementEntry(int index, String name, MeasurementEntry newEntry) {
+    _repository.editMeasurementEntry(index, name, newEntry);
   }
 
   bool measurementExists(String name) {
@@ -61,9 +82,19 @@ class MeasurementsLoaded extends MeasurementsState {
     return _measurements;
   }
 
-  List<MeasurementEntry> getMeasurementEntries(String id) {
+  List<MeasurementEntry> getMeasurementEntries(String name) {
     try {
-      return _measurementEntries[id]!;
+      return _measurementEntries[name]!;
+    } catch (e) {
+      throw Exception(
+          "attempted to get entries for a measurement that does not exist");
+    }
+  }
+
+  List<(double, DateTime)> getConvertedEntries(String name) {
+    try {
+      var entries = _measurementEntries[name]!;
+      return entries.map((e) => (e.value, e.entryDate)).toList();
     } catch (e) {
       throw Exception(
           "attempted to get entries for a measurement that does not exist");

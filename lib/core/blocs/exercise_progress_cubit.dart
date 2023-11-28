@@ -48,6 +48,7 @@ class ExerciseProgressCubit extends Cubit<ExerciseProgressState> {
           return newLog;
         });
 
+        // find and set highest value for a particular date
         double highestWeightLifted = 0;
         for (ExerciseSet set in exercise.sets) {
           if (set.weight > highestWeightLifted && set.reps != 0) {
