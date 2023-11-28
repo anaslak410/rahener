@@ -2,21 +2,23 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:rahener/core/models/measurement.dart';
 import 'package:rahener/core/models/measurement_entry.dart';
+import 'package:rahener/core/screens/profile/edit_entry_list_item.dart';
 import 'package:rahener/utils/constants.dart';
 
 class EntryHistoryPanel extends StatefulWidget {
   final List<MeasurementEntry> entries;
   final Measurement measurement;
-  final Function onConfirmEntryEditPressed;
+  final Function confirmEntryEdit;
   final Function showRemovalConfirmationDialog;
   final Function onEntryDissmissed;
   const EntryHistoryPanel(
       {super.key,
       required this.entries,
       required this.measurement,
-      required this.onConfirmEntryEditPressed,
+      required this.confirmEntryEdit,
       required this.showRemovalConfirmationDialog,
       required this.onEntryDissmissed});
 
@@ -28,7 +30,7 @@ class _EntryHistoryPanelState extends State<EntryHistoryPanel> {
   final TextEditingController _editEntryController = TextEditingController();
   late final List<MeasurementEntry> _entries;
   late final Measurement _measurement;
-  late final Function _onConfirmEntryEditPressed;
+  late final Function _confirmEntryEdit;
   late final Function _showRemovalConfirmationDialog;
   late final Function _onEntryDissmissed;
   int? _indexOfEntryEdited;
@@ -37,10 +39,17 @@ class _EntryHistoryPanelState extends State<EntryHistoryPanel> {
   void initState() {
     _entries = widget.entries;
     _measurement = widget.measurement;
-    _onConfirmEntryEditPressed = widget.onConfirmEntryEditPressed;
+    _confirmEntryEdit = widget.confirmEntryEdit;
     _showRemovalConfirmationDialog = widget.showRemovalConfirmationDialog;
     _onEntryDissmissed = widget.onEntryDissmissed;
     super.initState();
+  }
+
+  void _onConfirmEditEntryPressed(int index, MeasurementEntry newEntry) {
+    setState(() {
+      _indexOfEntryEdited = null;
+    });
+    _confirmEntryEdit(index, newEntry);
   }
 
   Future<void> _onEditEntryPressed(int index) async {
@@ -50,9 +59,17 @@ class _EntryHistoryPanelState extends State<EntryHistoryPanel> {
     });
   }
 
+  void _onEditEntryFieldFocusChanged(bool value) {
+    if (value == false) {
+      setState(() {
+        _indexOfEntryEdited = null;
+      });
+    }
+  }
+
   Widget _buildEmptyEntries() {
     double iconSize = 64.0;
-    return Container(
+    return SizedBox(
       height: 200,
       child: Center(
         child: Column(
@@ -95,65 +112,34 @@ class _EntryHistoryPanelState extends State<EntryHistoryPanel> {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       key: UniqueKey(),
+      reverse: true,
       itemCount: _entries.length,
       itemBuilder: (context, index) {
         DateTime rawDate = _entries[index].entryDate;
         String dateStr = "${rawDate.year}-${rawDate.month}-${rawDate.day}";
         String valueStr = '${_entries[index].value} (${_measurement.unit})';
 
-        Widget mainContent = Text(valueStr);
-        Widget trailingContent = IconButton(
-            icon: const Icon(
-              Icons.edit,
-              size: 19,
-            ),
-            onPressed: () => _onEditEntryPressed(index));
+        Widget listItem = ListTile(
+          title: Text(valueStr),
+          subtitle: Text(dateStr),
+          trailing: IconButton(
+              icon: const Icon(
+                Icons.edit,
+                size: 19,
+              ),
+              onPressed: () => _onEditEntryPressed(index)),
+        );
 
         if ((_indexOfEntryEdited != null) && _indexOfEntryEdited == index) {
-          mainContent = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                constraints: const BoxConstraints(maxWidth: 70),
-                child: FocusScope(
-                  onFocusChange: (value) {
-                    if (value == false) {
-                      setState(() {
-                        _indexOfEntryEdited = null;
-                      });
-                    }
-                  },
-                  child: TextField(
-                    maxLength: Constants.maxMeasurementEntry,
-                    keyboardType: TextInputType.number,
-                    controller: _editEntryController,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
-                    ],
-                    decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            top: 3, bottom: 3, right: 10, left: 12),
-                        isDense: true,
-                        filled: true,
-                        counterText: ""),
-                  ),
-                ),
-              ),
-              Text(" (${widget.measurement.unit})")
-            ],
+          listItem = EditEntryListItem(
+            onConfirmEntryEditPressed: _onConfirmEditEntryPressed,
+            measurementUnit: widget.measurement.unit,
+            onEditEntryFieldFocusChanged: _onEditEntryFieldFocusChanged,
+            date: rawDate,
+            index: index,
           );
-          trailingContent = IconButton(
-              icon: Icon(
-                Icons.check_sharp,
-                size: 23,
-                color: _editEntryController.text.isEmpty
-                    ? null
-                    : Theme.of(context).primaryColor,
-              ),
-              onPressed: _editEntryController.text.isEmpty
-                  ? null
-                  : () => _onConfirmEntryEditPressed());
         }
+
         return Dismissible(
           key: UniqueKey(),
           direction: DismissDirection.endToStart,
@@ -169,11 +155,7 @@ class _EntryHistoryPanelState extends State<EntryHistoryPanel> {
                   fontSize: Constants.fontSize4),
             )),
           ),
-          child: ListTile(
-            title: mainContent,
-            subtitle: Text(dateStr),
-            trailing: trailingContent,
-          ),
+          child: listItem,
           confirmDismiss: (direction) {
             return _showRemovalConfirmationDialog();
           },

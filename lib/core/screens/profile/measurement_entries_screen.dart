@@ -42,7 +42,7 @@ class _MeasurementEntriesScreenState extends State<MeasurementEntriesScreen> {
         widget.measurement.name);
   }
 
-  void _onConfirmEntryEditPressed(int index, MeasurementEntry newEntry) {
+  void _confirmEntryEdit(int index, MeasurementEntry newEntry) {
     _bloc.editMeasurementEntry(index, widget.measurement.name, newEntry);
   }
 
@@ -119,7 +119,7 @@ class _MeasurementEntriesScreenState extends State<MeasurementEntriesScreen> {
                     EntryHistoryPanel(
                       entries: entries,
                       measurement: widget.measurement,
-                      onConfirmEntryEditPressed: _onConfirmEntryEditPressed,
+                      confirmEntryEdit: _confirmEntryEdit,
                       onEntryDissmissed: _onEntryDissmissed,
                       showRemovalConfirmationDialog:
                           _showRemovalConfirmationDialog,

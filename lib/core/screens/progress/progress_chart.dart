@@ -31,9 +31,15 @@ class ProgressChartState extends State<ProgressChart> {
   late double _xinterval;
 
   @override
-  void initState() {
-    super.initState();
+  void didUpdateWidget(covariant ProgressChart oldWidget) {
     _initValues();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void initState() {
+    _initValues();
+    super.initState();
   }
 
   void _initValues() {
