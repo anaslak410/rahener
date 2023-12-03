@@ -9,7 +9,7 @@ import 'package:rahener/core/models/exercise_set.dart';
 class Exercise {
   final String id;
   final String name;
-  final List<String> primaryMuscles;
+  final String primaryMuscle;
   final List<String> secondaryMuscles;
   final String equipment;
   final List<String> tips;
@@ -20,7 +20,7 @@ class Exercise {
     required this.id,
     required this.name,
     required this.equipment,
-    required this.primaryMuscles,
+    required this.primaryMuscle,
     required this.secondaryMuscles,
     required this.tips,
     required this.steps,
@@ -31,7 +31,7 @@ class Exercise {
     String? id,
     String? name,
     String? equipment,
-    List<String>? primaryMuscles,
+    String? primaryMuscle,
     List<String>? secondaryMuscles,
     List<String>? tips,
     List<String>? steps,
@@ -41,7 +41,7 @@ class Exercise {
       id: id ?? this.id,
       name: name ?? this.name,
       equipment: equipment ?? this.equipment,
-      primaryMuscles: primaryMuscles ?? this.primaryMuscles,
+      primaryMuscle: primaryMuscle ?? this.primaryMuscle,
       secondaryMuscles: secondaryMuscles ?? this.secondaryMuscles,
       tips: tips ?? this.tips,
       steps: steps ?? this.steps,
@@ -54,7 +54,7 @@ class Exercise {
       'id': id,
       'name': name,
       'equipment': equipment,
-      'primaryMuscles': primaryMuscles,
+      'primaryMuscle': primaryMuscle,
       'secondaryMuscles': secondaryMuscles,
       'tips': tips,
       'steps': steps,
@@ -68,7 +68,7 @@ class Exercise {
       name: map['name'],
       equipment: map['equipment'],
       tips: List<String>.from(map['tips']),
-      primaryMuscles: List<String>.from(map['primaryMuscles']),
+      primaryMuscle: map['primaryMuscle'],
       secondaryMuscles: List<String>.from(map['secondaryMuscles']),
       steps: List<String>.from(map['steps']),
       similarExercises: List<String>.from(map['similarExercises']),
@@ -85,7 +85,7 @@ class Exercise {
     return '''Exercise(id: $id,
      name: $name,
      equipment: $equipment,
-       primaryMuscles: $primaryMuscles,
+       primaryMuscles: $primaryMuscle,
        secondaryMuscles: $secondaryMuscles,
        tips: $tips,
         steps: $steps,
@@ -100,7 +100,7 @@ class Exercise {
     return other is Exercise &&
         other.id == id &&
         other.name == name &&
-        listEquals(other.primaryMuscles, primaryMuscles) &&
+        listEquals(other.primaryMuscle, primaryMuscle) &&
         listEquals(other.secondaryMuscles, secondaryMuscles) &&
         listEquals(other.tips, tips) &&
         listEquals(other.steps, steps) &&
@@ -111,11 +111,15 @@ class Exercise {
   int get hashCode {
     return id.hashCode ^
         name.hashCode ^
-        primaryMuscles.hashCode ^
+        primaryMuscle.hashCode ^
         secondaryMuscles.hashCode ^
         tips.hashCode ^
         steps.hashCode ^
         similarExercises.hashCode;
+  }
+
+  static String generateUniqueKey() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
   }
 }
 
@@ -126,7 +130,7 @@ class SessionExercise extends Exercise {
       {required id,
       required name,
       required equipment,
-      required primaryMuscles,
+      required primaryMuscle,
       required secondaryMuscles,
       required tips,
       required steps,
@@ -137,7 +141,7 @@ class SessionExercise extends Exercise {
             id: id,
             name: name,
             equipment: equipment,
-            primaryMuscles: primaryMuscles,
+            primaryMuscle: primaryMuscle,
             secondaryMuscles: secondaryMuscles,
             tips: tips,
             steps: steps,
@@ -149,7 +153,7 @@ class SessionExercise extends Exercise {
             id: exercise.id,
             name: exercise.name,
             equipment: exercise.equipment,
-            primaryMuscles: exercise.primaryMuscles,
+            primaryMuscle: exercise.primaryMuscle,
             secondaryMuscles: exercise.secondaryMuscles,
             tips: exercise.tips,
             steps: exercise.steps,

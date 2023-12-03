@@ -45,7 +45,7 @@ class UserModel {
       username: map['username'] as String,
       id: map['id'] as String,
       customExercises: List<Exercise>.from(
-        (map['customExercises'] as List<int>).map<Exercise>(
+        (map['customExercises'] as List<dynamic>).map<Exercise>(
           (x) => Exercise.fromMap(x as Map<String, dynamic>),
         ),
       ),

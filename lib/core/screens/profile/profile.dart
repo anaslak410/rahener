@@ -28,23 +28,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: <Widget>[
         ListTile(
           title: Text(
-            'Username',
+            _bloc.state.user.username,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Text(
-            _bloc.state.toString(),
-            style: TextStyle(
-              fontSize: 16,
-            ),
+          subtitle: OutlinedButton(
+            onPressed: () => _onLogoutButtonPressed(),
+            child: Text("Logout"),
           ),
         ),
         const Divider(), // Add a divider for visual separation
         MeasurementsPanel()
       ],
     );
+  }
+
+  void _onLogoutButtonPressed() {
+    _bloc.signout();
   }
 
   Widget _unLoggedProfile() {
@@ -333,10 +335,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
           builder: (context, state) {
             if (state.status == UserStatus.notLogged) {
-              return _loggedInProfile();
+              return _unLoggedProfile();
             }
             if (state.status == UserStatus.logged) {
-              return _unLoggedProfile();
+              return _loggedInProfile();
             } else {
               return const CircularProgressIndicator();
             }

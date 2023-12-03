@@ -164,7 +164,7 @@ class Constants {
             id: "12",
             name: "Deadlift",
             equipment: "Barbell",
-            primaryMuscles: ["Lower Back", "Hamstrings"],
+            primaryMuscle: "te",
             secondaryMuscles: ["Glutes"],
             tips: ["Keep your back straight", "Engage your core"],
             steps: [

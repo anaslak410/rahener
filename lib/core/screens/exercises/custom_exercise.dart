@@ -26,6 +26,7 @@ class _CustomExerciseState extends State<CustomExercise> {
     TextEditingController()
   ];
   String _selectedEquipment = "";
+  String _selectedPrimaryMuscle = "";
   final List<String> _musclesTargeted = [];
 
   Widget _nameField() {
@@ -189,6 +190,24 @@ class _CustomExerciseState extends State<CustomExercise> {
         onChanged: _onEquipmentSelected);
   }
 
+  Widget _primaryMuscleDropDown(ExerciseListState state) {
+    return DropdownButtonFormField(
+        validator: (value) {
+          if (value == null) {
+            return 'Please select a primary muscle for the exercise';
+          }
+          return null;
+        },
+        hint: const Text("Select Muscle"),
+        value: _selectedPrimaryMuscle == "" ? null : _selectedPrimaryMuscle,
+        items: List.generate(state.primaryMuscleGroupNames.length, (index) {
+          return DropdownMenuItem(
+              value: state.primaryMuscleGroupNames[index],
+              child: Text(state.primaryMuscleGroupNames[index]));
+        }),
+        onChanged: _onPrimaryMuscleSelected);
+  }
+
   Widget _muscleGroupChips(state) {
     return FormField(
         enabled: true,
@@ -251,13 +270,13 @@ class _CustomExerciseState extends State<CustomExercise> {
           .map((controller) => controller.text)
           .toList();
 
-      String id = DateTime.now().microsecondsSinceEpoch.toString();
+      String id = Exercise.generateUniqueKey();
 
       Exercise newExercise = Exercise(
           id: id,
           name: _exerciseNameController.text,
           equipment: _selectedEquipment,
-          primaryMuscles: _musclesTargeted,
+          primaryMuscle: _selectedPrimaryMuscle,
           secondaryMuscles: _musclesTargeted,
           tips: exerciseTips,
           steps: exerciseSteps,
@@ -270,6 +289,11 @@ class _CustomExerciseState extends State<CustomExercise> {
 
   void _onEquipmentSelected(item) {
     _selectedEquipment = item;
+    log("pressed");
+  }
+
+  void _onPrimaryMuscleSelected(item) {
+    _selectedPrimaryMuscle = item;
     log("pressed");
   }
 
@@ -318,6 +342,15 @@ class _CustomExerciseState extends State<CustomExercise> {
               const SizedBox(height: Constants.margin3),
               _tipsList(),
               _addTipButton(),
+              const SizedBox(height: Constants.margin7),
+              Text(
+                'Primary Muscle:',
+                style: TextStyle(
+                    fontSize: Constants.fontSize4,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor),
+              ),
+              _primaryMuscleDropDown(state),
               const SizedBox(height: Constants.margin7),
               Text(
                 'Equipment:',

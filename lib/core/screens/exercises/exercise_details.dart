@@ -67,7 +67,7 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
                   children: [
                     Image(image: widget.exerciseImage),
                     MusclesLabel(
-                        primaryMuscles: widget.exercise.primaryMuscles,
+                        primaryMuscle: widget.exercise.primaryMuscle,
                         secondaryMuscles: widget.exercise.secondaryMuscles),
                     EquipmentLabel(
                       equipment: widget.exercise.equipment,

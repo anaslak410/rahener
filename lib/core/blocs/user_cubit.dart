@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rahener/core/models/auth_exception.dart';
 import 'package:rahener/core/models/user_model.dart';
-import 'package:rahener/core/services/auth_service.dart';
+import 'package:rahener/core/services/firebase_auth_service.dart';
 import 'package:rahener/core/services/firestore_data.dart';
 import 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
-  final AuthService _authService;
+  final FireBaseAuthService _authService;
   final FirestoreService _firestoreService;
 
   UserCubit({required authService, required firestoreService})

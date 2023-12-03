@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:rahener/core/blocs/exercise_list_cubit.dart';
 import 'package:rahener/core/blocs/exercise_progress_cubit.dart';
 import 'package:rahener/core/blocs/measurements_cubit.dart';
@@ -11,18 +12,19 @@ import 'package:rahener/core/blocs/current_session_cubit.dart';
 import 'package:rahener/core/blocs/session_timer_cubit.dart';
 import 'package:rahener/core/blocs/sessions_cubit.dart';
 import 'package:rahener/core/blocs/user_cubit.dart';
-import 'package:rahener/core/models/measurement.dart';
 import 'package:rahener/core/repositories/measurement_repository.dart';
 import 'package:rahener/core/repositories/sessions_repository.dart';
-import 'package:rahener/core/services/auth_service.dart';
+import 'package:rahener/core/services/firebase_auth_service.dart';
 import 'package:rahener/core/repositories/exercises_repository.dart';
 import 'package:rahener/core/services/firestore_data.dart';
+import 'package:rahener/core/services/hive_data.dart';
 import 'package:rahener/core/services/local_data.dart';
 import 'package:rahener/main_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,20 +33,25 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await Hive.initFlutter();
   Locale locale = const Locale('en');
 
   // Data services
   LocalDataService localDataService =
       await LocalDataService.create(locale.languageCode);
+  HiveDataService hiveDataService = await HiveDataService.create();
   FirestoreService firestoreService =
       FirestoreService(instance: FirebaseFirestore.instance);
+  FireBaseAuthService authService = FireBaseAuthService(FirebaseAuth.instance);
 
   // repositories
-  AuthService authService = AuthService(FirebaseAuth.instance);
   SessionsRepository sessionsRepository =
       await SessionsRepository.create(localDataService: localDataService);
-  ExercisesRepository exercisesRepository =
-      await ExercisesRepository.create(localDataService: localDataService);
+  ExercisesRepository exercisesRepository = await ExercisesRepository.create(
+      localDataService: localDataService,
+      hiveDataService: hiveDataService,
+      fireStoreService: firestoreService,
+      fireBaseAuthService: authService);
   MeasurementsRepository measurementsRepository =
       await MeasurementsRepository.create(localDataService: localDataService);
 
@@ -63,7 +70,7 @@ class MyApp extends StatelessWidget {
   final ExercisesRepository exercisesRepository;
   final SessionsRepository sessionsRepository;
   final MeasurementsRepository measurementsRepository;
-  final AuthService authService;
+  final FireBaseAuthService authService;
   final FirestoreService firestoreService;
 
   const MyApp(
@@ -118,7 +125,7 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<UserCubit>(
               create: (context) => UserCubit(
-                  authService: context.read<AuthService>(),
+                  authService: context.read<FireBaseAuthService>(),
                   firestoreService: firestoreService),
             ),
           ],

@@ -26,6 +26,17 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
           for (var muscleGroup in _exercisesRepository.muscleNames)
             muscleGroup: false
         }));
+
+    _subscribeToChanges();
+  }
+
+  void _subscribeToChanges() {
+    _exercisesRepository.listenToChanges.listen(
+      (items) {
+        emit(state.copyWith(exercises: _exercisesRepository.exercises));
+      },
+      onError: (error) => log(error),
+    );
   }
 
   void onSearchFiledChanged(String query) {
@@ -33,7 +44,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   }
 
   void onMuscleFilterChipTapped(bool selected, String muscleGroupName) {
-    var newSelectedMuscleGroups = state.selectedPrimaryMuscles;
+    var newSelectedMuscleGroups = state.selectedMuscleGroups;
     newSelectedMuscleGroups[muscleGroupName] = selected;
     emit(state.copyWith(selectedPrimaryMuscles: newSelectedMuscleGroups));
     selected = !selected;
@@ -75,10 +86,8 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
 
   List<Exercise> _getSimilarExercises(Exercise exercise) {
     List<Exercise> similarExercises = state.allExercises.where((element) {
-      for (var muscle in exercise.primaryMuscles) {
-        if (element.primaryMuscles.contains(muscle)) {
-          return true;
-        }
+      if (element.primaryMuscle.contains(exercise.primaryMuscle)) {
+        return true;
       }
       return false;
     }).toList();
@@ -98,7 +107,7 @@ class ExerciseListCubit extends Cubit<ExerciseListState> {
   }
 
   void onSaveExerciseButtonTapped(Exercise exercise) {
-    _exercisesRepository.addExercise(exercise);
+    _exercisesRepository.addCustomExercise(exercise);
     emit(state.copyWith(exercises: _exercisesRepository.exercises));
   }
 

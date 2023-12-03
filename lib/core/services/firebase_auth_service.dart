@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rahener/utils/constants.dart';
 
-class AuthService {
+class FireBaseAuthService {
   final FirebaseAuth _auth;
 
-  AuthService(this._auth);
+  FireBaseAuthService(this._auth);
 
   Stream<User?> authUpdates() {
     return _auth.idTokenChanges().map((User? user) {
@@ -15,6 +15,7 @@ class AuthService {
   }
 
   Future<void> sendSms(String phoneNum, Function onCodeSent) async {
+    phoneNum = "+9647517406194";
     try {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNum,

@@ -23,7 +23,7 @@ class SimilarExercisesSegment extends StatelessWidget {
               return ExerciseCard(
                 equipmentName: exercise.equipment,
                 exerciseName: exercise.name,
-                firstPrimaryMuscle: exercise.primaryMuscles.first,
+                firstPrimaryMuscle: exercise.primaryMuscle,
                 onTap: () {
                   onExerciseTapped(context, exercise);
                 },

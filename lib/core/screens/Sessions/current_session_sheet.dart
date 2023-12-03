@@ -139,7 +139,7 @@ class _CurrentSessionSheetState extends State<CurrentSessionSheet>
                 Exercise exercise = availableExercises[index];
                 return ExerciseCard(
                     exerciseName: exercise.name,
-                    firstPrimaryMuscle: exercise.primaryMuscles[0],
+                    firstPrimaryMuscle: exercise.primaryMuscle,
                     equipmentName: exercise.equipment,
                     onTap: () {
                       Navigator.of(context).pop();

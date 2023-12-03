@@ -28,8 +28,6 @@ class SessionsCubit extends Cubit<SessionsState> {
 
   void removeSession(Session session) {
     _repository.removeSession(session);
-    // List<Session> newSessions = List.from(state.sessions);
-    // newSessions.remove(session);
   }
 }
 

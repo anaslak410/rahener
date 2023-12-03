@@ -25,6 +25,13 @@ class UserState {
   final UserModel? _user;
   final String verificationID;
 
+  UserModel get user {
+    if (_user == null) {
+      throw Exception("attempted to get empty user");
+    }
+    return _user!;
+  }
+
   UserState copyWith({
     UserStatus? status,
     UserModel? user,

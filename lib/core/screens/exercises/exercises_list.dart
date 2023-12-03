@@ -104,7 +104,7 @@ class _ExercisesListScreenState extends State<ExercisesListScreen> {
                         onTap: () {
                           bloc.onExerciseTapped(context, exercise);
                         },
-                        firstPrimaryMuscle: exercise.primaryMuscles.first,
+                        firstPrimaryMuscle: exercise.primaryMuscle,
                         equipmentName: exercise.equipment))
                     .toList()
               ])),

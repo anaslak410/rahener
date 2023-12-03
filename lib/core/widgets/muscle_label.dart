@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:rahener/utils/constants.dart';
 
 class MusclesLabel extends StatelessWidget {
-  final List<String> primaryMuscles;
+  final String primaryMuscle;
   final List<String> secondaryMuscles;
   const MusclesLabel(
-      {super.key,
-      required this.primaryMuscles,
-      required this.secondaryMuscles});
+      {super.key, required this.primaryMuscle, required this.secondaryMuscles});
 
   String _secondaryMusclesText() {
     String text = "";
@@ -19,12 +17,8 @@ class MusclesLabel extends StatelessWidget {
     return text;
   }
 
-  String _primaryMusclesText() {
-    String text = "";
-    for (var i = 0; i < secondaryMuscles.length - 1; i++) {
-      text = "$text${primaryMuscles[i]}\n\n";
-    }
-    text = "$text${primaryMuscles.last}";
+  String _primaryMuscleText() {
+    String text = primaryMuscle;
 
     return text;
   }
@@ -45,7 +39,7 @@ class MusclesLabel extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  _primaryMusclesText(),
+                  _primaryMuscleText(),
                   style: TextStyle(
                     fontSize: Constants.fontSize4,
                     color: Theme.of(context).colorScheme.onSecondaryContainer,
